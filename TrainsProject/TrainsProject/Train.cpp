@@ -6,15 +6,17 @@ Train::Train() :
 	name(""),
 	number(0),
 	vectorOfRailCars(0),
-	vectorOfStations(0)
+	vectorOfStations(0),
+	vectorOfRoutes(0)
 {
 }
 
-Train::Train(string _name, unsigned _number, vector<RailCar> _vectorOfRailCars, vector<Station> _vectorOfStations):
+Train::Train(string _name, unsigned _number, vector<RailCar> _vectorOfRailCars, vector<Station> _vectorOfStations, vector<Route> _vectorOfRoutes):
 	name(_name), 
 	number(_number), 
 	vectorOfRailCars(_vectorOfRailCars),
-	vectorOfStations(_vectorOfStations)
+	vectorOfStations(_vectorOfStations),
+	vectorOfRoutes(_vectorOfRoutes)
 {
 }
 
@@ -38,6 +40,11 @@ void Train::pushStationToVectorOfStations(Station _station)
 	vectorOfStations.push_back(_station);
 }
 
+void Train::pushRouteToVectorOfRoutes(Route _r)
+{
+	vectorOfRoutes.push_back(_r);
+}
+
 string Train::getName() const
 {
 	return name;
@@ -56,4 +63,9 @@ vector<RailCar> Train::getVectorOfRailCars() const
 vector<Station> Train::getVectorOfStations() const
 {
 	return vectorOfStations;
+}
+
+vector<Route> Train::getVectorOfRoutes() const
+{
+	return vectorOfRoutes;
 }

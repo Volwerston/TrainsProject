@@ -1,15 +1,15 @@
 #include <iostream>
-#include "tinyxml2\tinyxml2.h"
+#include <vector>
+
+#include "Train.h"
+#include "Algorithms.h"
 
 using namespace std;
-using namespace tinyxml2;
 
 int main()
 {
-	
+	vector<Train> trains = getTrainsByDate("2016-10-01");
 
-
-	cout << "Hello world" << endl;
 	system("pause");
 	return 0;
 }
