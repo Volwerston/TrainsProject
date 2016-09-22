@@ -59,7 +59,7 @@ void TripData::setDate(string _date)
 
 void TripData::setDeparturePoint(string _departure)
 {
-	departurePoint = _departure.;
+	departurePoint = _departure;
 }
 
 void TripData::setArrivalPoint(string _arrival)
