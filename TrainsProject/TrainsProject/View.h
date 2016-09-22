@@ -4,6 +4,7 @@
 class View
 {
 public:
+	View();
 	View(TripData tripData);
 
 	virtual void draw() = 0;

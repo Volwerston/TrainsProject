@@ -31,4 +31,3 @@ public:
 	void setNumberOfRailcar(unsigned);
 	void pushToVectorOfSeats(unsigned);
 };
-
