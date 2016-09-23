@@ -2,6 +2,7 @@
 #include "Printer.h"
 #include "View.h"
 #include "TripData.h"
+#include "Console.h"
 
 class RailCarView :public View
 {
@@ -14,6 +15,7 @@ private:
 	vector<unsigned> vectorOfSeats;
 public:
 	RailCarView(TripData);
+	void drawRailCar();
 	void draw();
 	View* handle();
 };
