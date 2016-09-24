@@ -1,3 +1,4 @@
+<Data>
 <Train>
 <Number>43</Number>
 <RailCar>
@@ -68,4 +69,16 @@
 <Seat>41</Seat>
 </RailCar>
 </Route>
+<Route>
+<From>lviv</From>
+<To>brody</To>
+<RailCar>
+<Number>2</Number>
+<Seat>5</Seat>
+<Seat>10</Seat>
+<Seat>17</Seat>
+<Seat>41</Seat>
+</RailCar>
+</Route>
 </Train>
+</Data>
