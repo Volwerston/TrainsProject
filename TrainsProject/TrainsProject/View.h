@@ -11,4 +11,6 @@ public:
 	virtual View* handle() = 0;
 
 	void clean();
+
+	virtual ~View(){}
 };

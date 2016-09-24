@@ -8,17 +8,19 @@ TripData::TripData():
 	arrivalPoint(""),
 	numberOfTrain(0),
 	numberOfRailCar(0),
-	vectorOfSeats(0)
+	vectorOfSeats(0),
+	chosenTrain(Train())
 {
 }
 
-TripData::TripData(string _date, string _arrivalPoint, string _departurePoint, unsigned _numberOfTrain, unsigned _numberOfRailCar, vector<unsigned> _vectorOfSeats):
+TripData::TripData(string _date, string _departurePoint, string _arrivalPoint, unsigned _numberOfTrain, unsigned _numberOfRailCar, vector<unsigned> _vectorOfSeats, Train _t) :
 	date(_date),
 	arrivalPoint(_arrivalPoint),
 	departurePoint(_departurePoint),
 	numberOfTrain(_numberOfTrain),
 	numberOfRailCar(_numberOfRailCar),
-	vectorOfSeats(_vectorOfSeats)
+	vectorOfSeats(_vectorOfSeats),
+	chosenTrain(_t)
 {
 }
 
@@ -52,6 +54,11 @@ vector<unsigned> TripData::getVectorOfSeats() const
 	return vectorOfSeats;
 }
 
+Train TripData::getTrain() const
+{
+	return chosenTrain;
+}
+
 void TripData::setDate(string _date)
 {
 	date = _date;
@@ -75,6 +82,11 @@ void TripData::setNumberOfTrain(unsigned _numberOfTrain)
 void TripData::setNumberOfRailcar(unsigned _numberOfRailCar)
 {
 	numberOfRailCar = _numberOfRailCar;
+}
+
+void TripData::setTrain(Train t)
+{
+	chosenTrain = t;
 }
 
 void TripData::pushToVectorOfSeats(unsigned seat)

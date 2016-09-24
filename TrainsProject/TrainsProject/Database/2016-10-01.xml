@@ -1,5 +1,5 @@
 <Train>
-<Number>043L</Number>
+<Number>43</Number>
 <RailCar>
 <Number>1</Number>
 <Type>K</Type>
@@ -58,7 +58,7 @@
 </Arrival>
 </Train>
 <Train>
-<Number>270S</Number>
+<Number>270</Number>
 <RailCar>
 <Number>1</Number>
 <Type>L</Type>
@@ -133,7 +133,7 @@
 </Arrival>
 </Train>
 <Train>
-<Number>6011</Number>
+<Number>601</Number>
 <RailCar>
 <Number>1</Number>
 <Type>P</Type>

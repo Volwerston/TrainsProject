@@ -59,6 +59,6 @@ void RailCarView::draw()
 
 View* RailCarView::handle()
 {
-	View* nextView = new RailCarView();
+	View* nextView = new RailCarView(TripData());
 	return nextView;
 }

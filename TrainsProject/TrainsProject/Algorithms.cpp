@@ -26,7 +26,7 @@ RailCar readRailCar(XMLElement* railCar)
 	XMLElement* railCarType = railCar->FirstChildElement("Type");
 	typeOfCar = railCarType->GetText();
 	XMLElement* seatsNumber = railCar->FirstChildElement("Seats");
-	railCarNumber->QueryIntText(&numOfSeats);
+	seatsNumber->QueryIntText(&numOfSeats);
 
 	toReturn.setNumber(number);
 	toReturn.setNumberOfSeats(numOfSeats);
@@ -157,12 +157,11 @@ vector<Train> getTrainsByDate(const string& date)
 
 	if (err == XML_SUCCESS)
 	{
-		Train currTrain;
-
 		XMLElement* train = trainsData.FirstChildElement("Train");
 
 		while (train != nullptr)
 		{
+			Train currTrain;
 
 			// gets the number of train
 			XMLElement* trainNumber = train->FirstChildElement("Number");
