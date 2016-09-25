@@ -17,3 +17,8 @@ const CreditCard& CreditCard::operator+=( const CreditCard& rhs )
 	this->mBalance += rhs.mBalance;
 	return *this;
 }
+
+string CreditCard::number() const
+{
+	return mNumber;
+}
