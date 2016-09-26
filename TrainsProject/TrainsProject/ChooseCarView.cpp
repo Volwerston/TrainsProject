@@ -29,7 +29,7 @@ bool intersect(Route r1, Route r2, vector<Station>& st)
 	{
 		bool secondRouteStarted = false;
 
-		for (int i = 0; i < st.size(); ++i)
+		for (size_t i = 0; i < st.size(); ++i)
 		{
 			if (r2.getArrivalStation() == st[i].getName())
 			{
@@ -71,14 +71,14 @@ void ChooseCarView::draw()
 
 	trainSnippet.resize(railCars.size());
 
-	for (int i = 0; i < trainSnippet.size(); ++i)
+	for (size_t i = 0; i < trainSnippet.size(); ++i)
 	{
 		trainSnippet[i] = vector<bool>(railCars[i].getNumberOfSeats(), false);
 	}
 
 	Route chosenRoute(tripData.getDeparturePoint(), tripData.getArrivalPoint());
 
-	for (int i = 0; i < routes.size(); ++i)
+	for (size_t i = 0; i < routes.size(); ++i)
 	{
 		if (intersect(chosenRoute, routes[i], stations))
 		{
@@ -86,9 +86,9 @@ void ChooseCarView::draw()
 			vector<RailCar> bookingData = routes[i].getBookingData();
 
 			// takes a "snippet" of booked tickets in this train
-			for (int j = 0; j < bookingData.size(); ++j)
+			for (size_t j = 0; j < bookingData.size(); ++j)
 			{
-				for (int k = 0; k < bookingData[j].getVectotOfBookedSeats().size(); ++k)
+				for (size_t k = 0; k < bookingData[j].getVectotOfBookedSeats().size(); ++k)
 				{
 					trainSnippet[bookingData[j].getNumber() - 1][bookingData[j].getVectotOfBookedSeats()[k] - 1] = true;
 				}
@@ -98,7 +98,7 @@ void ChooseCarView::draw()
 
 
 	// output all railcars one-by-one
-	for (int i = 0; i < tripData.getTrain().getVectorOfRailCars().size(); ++i)
+	for (size_t i = 0; i < tripData.getTrain().getVectorOfRailCars().size(); ++i)
 	{
 		int numOfFreeSeats = railCars[i].getNumberOfSeats() - std::count(trainSnippet[i].begin(), trainSnippet[i].end(), true);
 		string toPrint;
@@ -109,12 +109,8 @@ void ChooseCarView::draw()
 		string railCarType;
 		string price;
 
-		if (railCars[i].getType() == TypeOfRailCar::DiningCar)
-		{
-			railCarType = "Dining Car";
-			price = "30";
-		}
-		else if (railCars[i].getType() == TypeOfRailCar::FirstClass)
+		
+		if (railCars[i].getType() == TypeOfRailCar::FirstClass)
 		{
 			railCarType = "Deluxe";
 			price = "40";
@@ -145,7 +141,7 @@ View* ChooseCarView::handle()
 	draw();
 
 	bool notChosen = true;
-	int numOfCar;
+	unsigned numOfCar;
 
 	while (notChosen)
 	{

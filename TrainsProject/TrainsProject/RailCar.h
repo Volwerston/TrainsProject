@@ -5,9 +5,9 @@ enum class TypeOfRailCar
 {
 	FirstClass,// люкс
 	SecondClass, // купе
-	ThirdClass, // плацкарт
-	DiningCar, // вагон-ресторан
+	ThirdClass // плацкарт
 };
+
 class RailCar
 {
 	unsigned number;

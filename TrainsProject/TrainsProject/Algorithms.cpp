@@ -43,10 +43,6 @@ RailCar readRailCar(XMLElement* railCar)
 	{
 		toReturn.setType(TypeOfRailCar::ThirdClass);
 	}
-	else
-	{
-		toReturn.setType(TypeOfRailCar::DiningCar);
-	}
 
 	return toReturn;
 }
@@ -254,24 +250,21 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 	XMLNode* root = doc.NewElement("Data");
 
-	for (int i = 0; i < vec.size(); ++i)
+	for (size_t i = 0; i < vec.size(); ++i)
 	{
 		XMLElement* train = doc.NewElement("Train");
 
 		vector<RailCar> railCars = vec[i].getVectorOfRailCars();
 
-		for (int j = 0; j < railCars.size(); ++j)
+		for (size_t j = 0; j < railCars.size(); ++j)
 		{
 			XMLElement* railCar = doc.NewElement("RailCar");
 			XMLElement* number = doc.NewElement("Number");
 			number->SetText(railCars[j].getNumber());
 			XMLElement* type = doc.NewElement("Type");
 			
-			if (railCars[j].getType() == TypeOfRailCar::DiningCar)
-			{
-				type->SetText("D");
-			}
-			else if (railCars[j].getType() == TypeOfRailCar::FirstClass)
+			
+			if (railCars[j].getType() == TypeOfRailCar::FirstClass)
 			{
 				type->SetText("L");
 			}
@@ -309,7 +302,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 		vector<Station> stations = vec[i].getVectorOfStations();
 
-		for (int j = 1; j < stations.size() - 1; ++j)
+		for (size_t j = 1; j < stations.size() - 1; ++j)
 		{
 			XMLElement* transition = doc.NewElement("Transition");
 			XMLElement* name = doc.NewElement("Name");
@@ -371,7 +364,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 		vector<Route> routes = vec[i].getVectorOfRoutes();
 
-		for (int j = 0; j < routes.size(); ++j)
+		for (size_t j = 0; j < routes.size(); ++j)
 		{
 			XMLElement* route = doc.NewElement("Route");
 			XMLElement* routeFrom = doc.NewElement("From");
@@ -385,7 +378,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 			vector<RailCar> bookingData = routes[j].getBookingData();
 
-			for (int k = 0; k < bookingData.size(); ++k)
+			for (size_t k = 0; k < bookingData.size(); ++k)
 			{
 				XMLElement* railCarSnippet = doc.NewElement("RailCar");
 
@@ -395,7 +388,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 				vector<unsigned int> seats = bookingData[k].getVectotOfBookedSeats();
 
-				for (int l = 0; l < seats.size(); ++l)
+				for (size_t l = 0; l < seats.size(); ++l)
 				{
 					XMLElement* seatSnippet = doc.NewElement("Seat");
 					seatSnippet->SetText(seats[l]);

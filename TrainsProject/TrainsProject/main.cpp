@@ -5,6 +5,7 @@
 #include "Algorithms.h"
 #include "TripData.h"
 #include "ChooseCarView.h"
+#include "RailCarView.h"
 
 using namespace std;
 
@@ -23,6 +24,18 @@ int main()
 	*/
 
 	saveTrainsByDate(trains, "2016-10-03");
+
+	View *view = new RailCarView(tripData);
+	while (view != nullptr)
+	{
+		view->draw();
+		View* newView = view->handle();
+		if (newView != view)
+		{
+			delete view;
+			view = newView;
+		}
+	}
 
 	system("pause");
 	return 0;
