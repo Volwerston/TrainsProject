@@ -25,7 +25,7 @@ int main()
 
 	saveTrainsByDate(trains, "2016-10-03");
 
-	View *view = new RailCarView(tripData);
+	View *view = new ChooseCarView(tripData);
 	while (view != nullptr)
 	{
 		view->draw();
