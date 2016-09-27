@@ -447,4 +447,6 @@ vector<Train> getSuitableTrains(const vector<Train> &tr)
 		}
 	}
 	return vectorOfSuitableTrains;
+
+	//We can find out what the price is by using the difference between numberOfDepartureStation and numberOfArrivalStatin
 }
