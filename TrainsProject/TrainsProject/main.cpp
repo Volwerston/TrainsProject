@@ -6,12 +6,16 @@
 #include "TripData.h"
 #include "ChooseCarView.h"
 #include "RailCarView.h"
+#include "ConsoleProperties.h"
 
 using namespace std;
 
 int main()
 {
-	vector<Train> trains = getTrainsByDate("2016-10-01");
+
+	//setConsoleProperties();
+
+	vector<Train> trains = getTrainsByDate("2016-10-02");
 
 	TripData tripData("2016-10-02", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
 
@@ -23,7 +27,7 @@ int main()
 	delete carView;
 	*/
 
-	saveTrainsByDate(trains, "2016-10-03");
+	//saveTrainsByDate(trains, "2016-10-03");
 
 	View *view = new ChooseCarView(tripData);
 	while (view != nullptr)
