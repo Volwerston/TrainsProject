@@ -65,8 +65,6 @@
 <Seat>5</Seat>
 <Seat>10</Seat>
 <Seat>17</Seat>
-<Seat>30</Seat>
-<Seat>41</Seat>
 </RailCar>
 </Route>
 <Route>
@@ -74,10 +72,10 @@
 <To>brody</To>
 <RailCar>
 <Number>2</Number>
-<Seat>5</Seat>
-<Seat>10</Seat>
-<Seat>17</Seat>
-<Seat>41</Seat>
+<Seat>1</Seat>
+<Seat>2</Seat>
+<Seat>3</Seat>
+<Seat>4</Seat>
 </RailCar>
 </Route>
 </Train>
