@@ -186,7 +186,7 @@ View* ChooseCarView::handle()
 			{
 				if (trainSnippet[i][j])
 				{
-					railCars[i].pushSeatToVectorOfBookedSeats(j + 1);
+					railCars[i].pushSeatToVectorOfBookedSeats(j);
 				}
 			}
 		}

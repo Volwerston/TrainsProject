@@ -176,7 +176,7 @@ View* RailCarView::handle()
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
 	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
-	vectorOfBookedSeats.push_back(5);
+	//vectorOfBookedSeats.push_back(5);
 	drawSold(vectorOfBookedSeats, selected);
 	drawSelected(selected);
 
