@@ -3,8 +3,8 @@
     <Number>43</Number>
     <RailCar>
       <Number>1</Number>
-      <Type>K</Type>
-      <Seats>24</Seats>
+      <Type>L</Type>
+      <Seats>4</Seats>
     </RailCar>
     <RailCar>
       <Number>2</Number>
@@ -60,6 +60,13 @@
     <Route>
       <From>ivano-frankivsk</From>
       <To>kyiv</To>
+      <RailCar>
+        <Number>1</Number>
+        <Seat>1</Seat>
+        <Seat>2</Seat>
+        <Seat>3</Seat>
+        <Seat>4</Seat>
+      </RailCar>
       <RailCar>
         <Number>3</Number>
         <Seat>1</Seat>
