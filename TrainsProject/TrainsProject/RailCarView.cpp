@@ -10,6 +10,8 @@ HBRUSH brushForRailCarSeatSold1, brushForRailCarSeatSold2 = CreateSolidBrush(RGB
 HBRUSH brushForRailCarFirstClassSeat1, brushForRailCarFirstClassSeat2 = CreateSolidBrush(RGB(52, 152, 219));
 HBRUSH brushForRailCarFirstClassSeatSelected1, brushForRailCarFirstClassSeatSelected2 = CreateSolidBrush(RGB(142, 68, 173));
 
+Printer printer(Color::WHITE, Color::CYAN);
+
 RailCarView::RailCarView(const TripData _tripData) :tripData(_tripData) {}
 
 void RailCarView::draw()
@@ -19,10 +21,39 @@ void RailCarView::draw()
 
 	RoundRect(hdc, 120, 100, 1220, 600, 100, 100);
 	
+	RoundRect(hdc, 120, 10, 300, 85, 20, 20);
+	setCursorAt(13, 2);
+	printer.print("Default seat");
+	
+	brushForRailCarSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSelected2);
+	RoundRect(hdc, 340, 10, 530, 85, 20, 20);
+	setCursorAt(33, 2);
+	printer.print("Selected seat");
+
+	brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
+	RoundRect(hdc, 570, 10, 720, 85, 20, 20);
+	setCursorAt(54, 2);
+	printer.print("Sold seat");
+
+	penForRailCarSelectedSold1 = (HPEN)SelectObject(hdc, penForRailCarSelectedSold2);
+	RoundRect(hdc, 760, 10, 1005, 85, 20, 20);
+	setCursorAt(71, 2);
+	printer.print("Selected sold seat");
+
+	penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
+	brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
+	RoundRect(hdc, 1037, 10, 1220, 85, 20, 20);
+	setCursorAt(96, 2);
+	printer.print("Same for LUXE");
+
+	setCursorAt(55, 36);
+	printAtCenter("Press Enter to continue", printer);
+
+	brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
+	
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
 		brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
@@ -81,7 +112,6 @@ void RailCarView::drawSeat(int num)
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 	{
 		if (num <= 1 || (num > 3 && num <= 5) || (num > 7 && num <= 9) || (num > 11 && num <= 13))
@@ -134,7 +164,6 @@ void RailCarView::drawSelected(int selected)
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
@@ -174,12 +203,10 @@ View* RailCarView::handle()
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
-	//vectorOfBookedSeats.push_back(5);
-	drawSold(vectorOfBookedSeats, selected);
 	drawSelected(selected);
-
+	drawSold(vectorOfBookedSeats, selected);
+	
 	while (!chosen)
 	{
 		switch (_getch())
@@ -327,25 +354,40 @@ View* RailCarView::handle()
 				}
 			}
 			break;
-		case 13:
+		case 32:
 			brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
+			if (!vectorOfBookedSeats.empty())
+			{
+				for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
+				{
+					if (selected != vectorOfBookedSeats[i])
+					{
+						vectorOfBookedSeats.push_back(selected);
+						tripData.pushToVectorOfSeats(selected);
+						break;
+					}
+				}
+			}
+			else
+			{
+				vectorOfBookedSeats.push_back(selected);
+				tripData.pushToVectorOfSeats(selected);
+			}
 			drawSeat(selected);
-			vectorOfBookedSeats.push_back(selected);
-			tripData.pushToVectorOfSeats(selected);
 			drawSold(vectorOfBookedSeats, selected);
 			for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
 			{
-				cout << vectorOfBookedSeats[i] << " ";
+				cout << vectorOfBookedSeats[i];
 			}
 			break;
 		case 27:
 			return 0;
-		case 32:
-			chosen = true;
+		case 13:
+			return 0;
 			break;
 		}
 	}
-
+	
 	View *nextView = new RailCarView(tripData);
 	SelectObject(hdc, penForRailCarSeats1);
 	SelectObject(hdc, penForRailCarSeatsBold1);
