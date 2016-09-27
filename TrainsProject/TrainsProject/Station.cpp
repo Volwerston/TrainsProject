@@ -24,6 +24,7 @@ void Station::setName(string _name)
 void Station::setTimeOfDeparture(string _timeOfDeparture)
 {
 	timeOfDeparture = _timeOfDeparture;
+
 }
 
 void Station::setTimeOfArrival(string _timeOfArrival)
