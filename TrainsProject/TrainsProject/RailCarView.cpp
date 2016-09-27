@@ -7,6 +7,8 @@ HPEN penForRailCarSelectedSold1, penForRailCarSelectedSold2 = CreatePen(PS_SOLID
 HBRUSH brushForRailCarSeat1, brushForRailCarSeat2 = CreateSolidBrush(RGB(189, 195, 199));
 HBRUSH brushForRailCarSeatSelected1, brushForRailCarSeatSelected2 = CreateSolidBrush(RGB(127, 140, 141));
 HBRUSH brushForRailCarSeatSold1, brushForRailCarSeatSold2 = CreateSolidBrush(RGB(44, 62, 80));
+HBRUSH brushForRailCarFirstClassSeat1, brushForRailCarFirstClassSeat2 = CreateSolidBrush(RGB(52, 152, 219));
+HBRUSH brushForRailCarFirstClassSeatSelected1, brushForRailCarFirstClassSeatSelected2 = CreateSolidBrush(RGB(142, 68, 173));
 
 RailCarView::RailCarView(const TripData _tripData) :tripData(_tripData) {}
 
@@ -16,86 +18,132 @@ void RailCarView::draw()
 	brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 
 	RoundRect(hdc, 120, 100, 1220, 600, 100, 100);
-
-	for (int i = 0; i < 4; i++)
+	
+	Train currentTrain = tripData.getTrain();
+	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
+	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
+	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
-		RoundRect(hdc, 150 + i * 270, 150, 230 + i * 270, 230, 20, 20);
-		RoundRect(hdc, 150 + i * 270, 280, 230 + i * 270, 360, 20, 20);
-		RoundRect(hdc, 150 + i * 270, 470, 230 + i * 270, 550, 20, 20);
+		brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
+		for (int i = 0; i < 4; i++)
+		{
+			RoundRect(hdc, 150 + i * 270, 150, 380 + i * 270, 360, 20, 20);
+		}
 
-		RoundRect(hdc, 300 + i * 270, 150, 380 + i * 270, 230, 20, 20);
-		RoundRect(hdc, 300 + i * 270, 280, 380 + i * 270, 360, 20, 20);
-		RoundRect(hdc, 300 + i * 270, 470, 380 + i * 270, 550, 20, 20);
+		penForRailCarSeatsBold1 = (HPEN)SelectObject(hdc, penForRailCarSeatsBold2);
+		DrawLine(hdc, 122, 380, 210, 380);
+		DrawLine(hdc, 1130, 380, 1217, 380);
+
+		for (int i = 0; i < 3; i++)
+		{
+			DrawLine(hdc, 400 + i * 270, 102, 400 + i * 270, 380);
+			DrawLine(hdc, 320 + i * 270, 380, 480 + i * 270, 380);
+		}
 	}
-
-	penForRailCarSeatsBold1 = (HPEN)SelectObject(hdc, penForRailCarSeatsBold2);
-	DrawLine(hdc, 122, 380, 210, 380);
-	DrawLine(hdc, 1130, 380, 1217, 380);
-
-	for (int i = 0; i < 3; i++)
+	else
 	{
-		DrawLine(hdc, 400 + i * 270, 102, 400 + i * 270, 380);
-		DrawLine(hdc, 400 + i * 270, 490, 400 + i * 270, 597);
-		DrawLine(hdc, 320 + i * 270, 380, 480 + i * 270, 380);
+		for (int i = 0; i < 4; i++)
+		{
+			RoundRect(hdc, 150 + i * 270, 150, 230 + i * 270, 230, 20, 20);
+			RoundRect(hdc, 150 + i * 270, 280, 230 + i * 270, 360, 20, 20);
+
+			RoundRect(hdc, 300 + i * 270, 150, 380 + i * 270, 230, 20, 20);
+			RoundRect(hdc, 300 + i * 270, 280, 380 + i * 270, 360, 20, 20);
+		}
+		penForRailCarSeatsBold1 = (HPEN)SelectObject(hdc, penForRailCarSeatsBold2);
+		DrawLine(hdc, 122, 380, 210, 380);
+		DrawLine(hdc, 1130, 380, 1217, 380);
+		for (int i = 0; i < 3; i++)
+		{
+			DrawLine(hdc, 400 + i * 270, 102, 400 + i * 270, 380);
+			DrawLine(hdc, 320 + i * 270, 380, 480 + i * 270, 380);
+		}
+		if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
+		{
+			penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
+			for (int i = 0; i < 4; i++)
+			{
+				RoundRect(hdc, 150 + i * 270, 470, 230 + i * 270, 550, 20, 20);
+				RoundRect(hdc, 300 + i * 270, 470, 380 + i * 270, 550, 20, 20);
+			}
+			penForRailCarSeatsBold1 = (HPEN)SelectObject(hdc, penForRailCarSeatsBold2);
+			for (int i = 0; i < 3; i++)
+			{
+				DrawLine(hdc, 400 + i * 270, 490, 400 + i * 270, 597);
+			}
+		}
 	}
 }
 
 void RailCarView::drawSeat(int num)
 {
-	if (num <= 1)
+	Train currentTrain = tripData.getTrain();
+	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
+	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
+	if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 	{
-		RoundRect(hdc, 150 + (num)* 150, 150, 230 + (num)* 150, 230, 20, 20);
+		if (num <= 1 || (num > 3 && num <= 5) || (num > 7 && num <= 9) || (num > 11 && num <= 13))
+		{
+			RoundRect(hdc, 150 + (num)* 150 - 30 * (num / 2) - 1080 * (num / 8), 150 + 130 * (num / 8), 
+				230 + (num)* 150 - 30 * (num / 2) - 1080 * (num / 8), 230 + 130 * (num / 8), 20, 20);
+		}
+		else if ((num > 1 && num <= 3) || (num > 5 && num <= 7) || (num > 9 && num <= 11) || (num > 13 && num <= 15))
+		{
+			RoundRect(hdc, 420 + (num - 2) * 150 - 30 * ((num - 2) / 2) - 1080 * (num / 10), 150 + 130 * (num / 10),
+				500 + (num - 2) * 150 - 30 * ((num - 2) / 2) - 1080 * (num / 10), 230 + 130 * (num / 10), 20, 20);
+		}
+		else if ((num > 15 && num <= 17) || (num > 19 && num <= 21))
+		{
+			RoundRect(hdc, 150 + (num - 16) * 150 - 30 * ((num - 16) / 2), 470, 230 + (num - 16) * 150 - 30 * ((num - 16) / 2), 550, 20, 20);
+		}
+		else if ((num > 17 && num <= 19) || (num > 21 && num <= 23))
+		{
+			RoundRect(hdc, 420 + (num - 18) * 150 - 30 * ((num - 18) / 2), 470, 500 + (num - 18) * 150 - 30 * ((num - 18) / 2), 550, 20, 20);
+		}
 	}
-	else if (num > 1 && num <= 3)
+	else if (currentRailCar.getType() == TypeOfRailCar::SecondClass)
 	{
-		RoundRect(hdc, 420 + (num - 2) * 150, 150, 500 + (num - 2) * 150, 230, 20, 20);
+		if (num <= 1 || (num > 3 && num <= 5) || (num > 7 && num <= 9) || (num > 11 && num <= 13))
+		{
+			RoundRect(hdc, 150 + (num)* 150 - 30 * (num / 2) - 1080 * (num / 8), 150 + 130 * (num / 8),
+				230 + (num)* 150 - 30 * (num / 2) - 1080 * (num / 8), 230 + 130 * (num / 8), 20, 20);
+		}
+		else if ((num > 1 && num <= 3) || (num > 5 && num <= 7) || (num > 9 && num <= 11) || (num > 13 && num <= 15))
+		{
+			RoundRect(hdc, 420 + (num - 2) * 150 - 30 * ((num - 2) / 2) - 1080 * (num / 10), 150 + 130 * (num / 10),
+				500 + (num - 2) * 150 - 30 * ((num - 2) / 2) - 1080 * (num / 10), 230 + 130 * (num / 10), 20, 20);
+		}
 	}
-	else if (num > 3 && num <= 5)
+	else
 	{
-		RoundRect(hdc, 690 + (num - 4) * 150, 150, 770 + (num - 4) * 150, 230, 20, 20);
-	}
-	else if (num > 5 && num <= 7)
-	{
-		RoundRect(hdc, 960 + (num - 6) * 150, 150, 1040 + (num - 6) * 150, 230, 20, 20);
-	}
-	else if (num > 7 && num <= 9)
-	{
-		RoundRect(hdc, 150 + (num - 8) * 150, 280, 230 + (num - 8) * 150, 360, 20, 20);
-	}
-	else if (num > 9 && num <= 11)
-	{
-		RoundRect(hdc, 420 + (num - 10) * 150, 280, 500 + (num - 10) * 150, 360, 20, 20);
-	}
-	else if (num > 11 && num <= 13)
-	{
-		RoundRect(hdc, 690 + (num - 12) * 150, 280, 770 + (num - 12) * 150, 360, 20, 20);
-	}
-	else if (num > 13 && num <= 15)
-	{
-		RoundRect(hdc, 960 + (num - 14) * 150, 280, 1040 + (num - 14) * 150, 360, 20, 20);
-	}
-	else if (num > 15 && num <= 17)
-	{
-		RoundRect(hdc, 150 + (num - 16) * 150, 470, 230 + (num - 16) * 150, 550, 20, 20);
-	}
-	else if (num > 17 && num <= 19)
-	{
-		RoundRect(hdc, 420 + (num - 18) * 150, 470, 500 + (num - 18) * 150, 550, 20, 20);
-	}
-	else if (num > 19 && num <= 21)
-	{
-		RoundRect(hdc, 690 + (num - 20) * 150, 470, 770 + (num - 20) * 150, 550, 20, 20);
-	}
-	else if (num > 21 && num <= 23)
-	{
-		RoundRect(hdc, 960 + (num - 22) * 150, 470, 1040 + (num - 22) * 150, 550, 20, 20);
+		if (num <= 1)
+		{
+			RoundRect(hdc, 150 + (num)* 270, 150, 380 + (num)* 270, 360, 20, 20);
+		}
+		else if (num > 1 && num <= 3)
+		{
+			RoundRect(hdc, 690 + (num - 2) * 270, 150, 920 + (num - 2) * 270, 360, 20, 20);
+		}
 	}
 }
 
 void RailCarView::drawSelected(int selected)
 {
+	Train currentTrain = tripData.getTrain();
+	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
+	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
-	brushForRailCarSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSelected2);
+	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
+	{
+		brushForRailCarFirstClassSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeatSelected2);
+	}
+	else
+	{
+		brushForRailCarSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSelected2);
+	}
 	drawSeat(selected);
 	brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 }
@@ -104,7 +152,7 @@ void RailCarView::drawSold(vector<unsigned> vec, int selected)
 {
 	brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
 	for (size_t i = 0; i < vec.size(); i++)
-	{
+	{		
 		drawSeat(vec[i]);
 		if (vec[i] == selected)
 		{
@@ -116,7 +164,6 @@ void RailCarView::drawSold(vector<unsigned> vec, int selected)
 	brushForRailCarSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSelected2);
 }
 
-
 View* RailCarView::handle()
 {
 	View::clean();
@@ -127,7 +174,10 @@ View* RailCarView::handle()
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
+	vectorOfBookedSeats.push_back(5);
+	drawSold(vectorOfBookedSeats, selected);
 	drawSelected(selected);
 
 	while (!chosen)
@@ -136,28 +186,90 @@ View* RailCarView::handle()
 		{
 		case 77:
 			selected++;
-			if (selected > 23 || selected == 8 || selected == 16)
+			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
-				selected--;
+				if (selected > 23 || selected == 8 || selected == 16)
+				{
+					selected--;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected - 1);
+					drawSold(vectorOfBookedSeats, selected);
+				}
+			}
+			else if (currentRailCar.getType() == TypeOfRailCar::SecondClass)
+			{
+				if (selected > 15 || selected == 8 )
+				{
+					selected--;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected - 1);
+					drawSold(vectorOfBookedSeats, selected);
+				}
 			}
 			else
 			{
-				drawSelected(selected);
-				drawSeat(selected - 1);
-				drawSold(vectorOfBookedSeats, selected);
+				if (selected > 3)
+				{
+					selected--;
+				}
+				else
+				{
+					brushForRailCarFirstClassSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeatSelected2);
+					drawSelected(selected);
+					brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
+					drawSeat(selected - 1);
+					drawSold(vectorOfBookedSeats, selected);
+				}
 			}
 			break;
 		case 75:
 			selected--;
-			if (selected < 0 || selected == 7 || selected == 15)
+			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
-				selected++;
+				if (selected < 0 || selected == 7 || selected == 15)
+				{
+					selected++;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected + 1);
+					drawSold(vectorOfBookedSeats, selected);
+				}
+			}
+			else if (currentRailCar.getType() == TypeOfRailCar::SecondClass)
+			{
+				if (selected < 0 || selected == 7)
+				{
+					selected++;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected + 1);
+					drawSold(vectorOfBookedSeats, selected);
+				}
 			}
 			else
 			{
-				drawSelected(selected);
-				drawSeat(selected + 1);
-				drawSold(vectorOfBookedSeats, selected);
+				if (selected < 0)
+				{
+					selected++;
+				}
+				else
+				{
+					brushForRailCarFirstClassSeatSelected1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeatSelected2);
+					drawSelected(selected);
+					brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
+					drawSeat(selected + 1);
+					drawSold(vectorOfBookedSeats, selected);
+				}
 			}
 			break;
 		case 72:
@@ -171,20 +283,48 @@ View* RailCarView::handle()
 				drawSelected(selected);
 				drawSeat(selected + 8);
 				drawSold(vectorOfBookedSeats, selected);
-
 			}
 			break;
 		case 80:
 			selected += 8;
-			if (selected > 23)
+			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
-				selected -= 8;
+				if (selected > 23)
+				{
+					selected -= 8;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected - 8);
+					drawSold(vectorOfBookedSeats, selected);
+				}
+			}
+			else if (currentRailCar.getType() == TypeOfRailCar::SecondClass)
+			{
+				if (selected > 15)
+				{
+					selected -= 8;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected - 8);
+					drawSold(vectorOfBookedSeats, selected);
+				}
 			}
 			else
 			{
-				drawSelected(selected);
-				drawSeat(selected - 8);
-				drawSold(vectorOfBookedSeats, selected);
+				if (selected > 3)
+				{
+					selected -= 8;
+				}
+				else
+				{
+					drawSelected(selected);
+					drawSeat(selected - 8);
+					drawSold(vectorOfBookedSeats, selected);
+				}
 			}
 			break;
 		case 13:
@@ -206,6 +346,7 @@ View* RailCarView::handle()
 		}
 	}
 
+	View *nextView = new RailCarView(tripData);
 	SelectObject(hdc, penForRailCarSeats1);
 	SelectObject(hdc, penForRailCarSeatsBold1);
 	SelectObject(hdc, brushForRailCarSeat1);
@@ -218,7 +359,5 @@ View* RailCarView::handle()
 	DeleteObject(brushForRailCarSeatSelected2);
 	DeleteObject(brushForRailCarSeatSold2);
 
-	
-	View *nextView = new RailCarView(tripData);
 	return nextView;
 }
