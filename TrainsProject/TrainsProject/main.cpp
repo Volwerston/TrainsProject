@@ -13,7 +13,7 @@ using namespace std;
 int main()
 {
 
-	setConsoleProperties();
+	//setConsoleProperties();
 
 	vector<Train> trains = getTrainsByDate("2016-10-02");
 
@@ -27,7 +27,7 @@ int main()
 	delete carView;
 	*/
 
-	saveTrainsByDate(trains, "2016-10-03");
+	//saveTrainsByDate(trains, "2016-10-03");
 
 	View *view = new ChooseCarView(tripData);
 	while (view != nullptr)
