@@ -177,6 +177,24 @@ View* ChooseCarView::handle()
 	{
 		tripData.setNumberOfRailcar(numOfCar);
 
+		Train aTrain = Train();
+		vector<RailCar> railCars = tripData.getTrain().getVectorOfRailCars();
+
+		for (int i = 0; i < trainSnippet.size(); ++i)
+		{
+			for (int j = 0; j < trainSnippet[i].size(); ++j)
+			{
+				if (trainSnippet[i][j])
+				{
+					railCars[i].pushSeatToVectorOfBookedSeats(j + 1);
+				}
+			}
+		}
+
+		tripData.setDataOfBookedSeats(railCars);
+
+		// you can find out the type of car by calling tripData.getTrain().getVectorOfRailCars()[tripData.getNumberOfRailCar() - 1].getType();
+
 		toReturn = new RailCarView(tripData);
 	}
 

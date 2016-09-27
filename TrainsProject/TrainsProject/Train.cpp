@@ -1,7 +1,5 @@
 #include "Train.h"
 
-
-
 Train::Train() :
 	name(""),
 	number(0),

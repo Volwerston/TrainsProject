@@ -3,27 +3,27 @@
         <RailCar>
             <Number>1</Number>
             <Type>K</Type>
-            <Seats>50</Seats>
+            <Seats>24</Seats>
         </RailCar>
         <RailCar>
             <Number>2</Number>
             <Type>K</Type>
-            <Seats>50</Seats>
+            <Seats>24</Seats>
         </RailCar>
         <RailCar>
             <Number>3</Number>
             <Type>K</Type>
-            <Seats>50</Seats>
+            <Seats>24</Seats>
         </RailCar>
         <RailCar>
             <Number>4</Number>
             <Type>K</Type>
-            <Seats>50</Seats>
+            <Seats>24</Seats>
         </RailCar>
         <RailCar>
             <Number>5</Number>
             <Type>K</Type>
-            <Seats>50</Seats>
+            <Seats>24</Seats>
         </RailCar>
         <Departure>
             <Name>ivano-frankivsk</Name>
@@ -56,153 +56,24 @@
             <Time>8:50</Time>
             <Date>2016-10-02</Date>
         </Arrival>
-    </Train>
-    <Train>
-        <RailCar>
-            <Number>1</Number>
-            <Type>L</Type>
-            <Seats>30</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>1</Number>
-            <Type>L</Type>
-            <Seats>30</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>3</Number>
-            <Type>K</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>4</Number>
-            <Type>K</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>5</Number>
-            <Type>K</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>6</Number>
-            <Type>K</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <Departure>
-            <Name>odesa</Name>
-            <Time>21:55</Time>
-        </Departure>
-        <Transition>
-            <Name>kirovograd</Name>
-            <Arrive>
-                <Time>23:46</Time>
-                <Date>2016-10-01</Date>
-            </Arrive>
-            <Leave>
-                <Time>23:49</Time>
-                <Date>2016-10-01</Date>
-            </Leave>
-        </Transition>
-        <Transition>
-            <Name>kremenchuk</Name>
-            <Arrive>
-                <Time>02:52</Time>
-                <Date>2016-10-02</Date>
-            </Arrive>
-            <Leave>
-                <Time>03:15</Time>
-                <Date>2016-10-02</Date>
-            </Leave>
-        </Transition>
-        <Transition>
-            <Name>poltava</Name>
-            <Arrive>
-                <Time>05:26</Time>
-                <Date>2016-10-02</Date>
-            </Arrive>
-            <Leave>
-                <Time>05:46</Time>
-                <Date>2016-10-02</Date>
-            </Leave>
-        </Transition>
-        <Arrival>
-            <Name>kharkiv</Name>
-            <Time>08:18</Time>
-            <Date>2016-10-02</Date>
-        </Arrival>
-    </Train>
-    <Train>
-        <RailCar>
-            <Number>1</Number>
-            <Type>P</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>2</Number>
-            <Type>P</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>3</Number>
-            <Type>P</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>4</Number>
-            <Type>P</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>5</Number>
-            <Type>P</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <RailCar>
-            <Number>6</Number>
-            <Type>P</Type>
-            <Seats>50</Seats>
-        </RailCar>
-        <Departure>
-            <Name>lviv</Name>
-            <Time>14:02</Time>
-        </Departure>
-        <Transition>
-            <Name>mykolaiv</Name>
-            <Arrive>
-                <Time>14:46</Time>
-                <Date>2016-10-01</Date>
-            </Arrive>
-            <Leave>
-                <Time>14:47</Time>
-                <Date>2016-10-01</Date>
-            </Leave>
-        </Transition>
-        <Transition>
-            <Name>stryi</Name>
-            <Arrive>
-                <Time>15:11</Time>
-                <Date>2016-10-01</Date>
-            </Arrive>
-            <Leave>
-                <Time>15:21</Time>
-                <Date>2016-10-01</Date>
-            </Leave>
-        </Transition>
-        <Transition>
-            <Name>drogobych</Name>
-            <Arrive>
-                <Time>15:49</Time>
-                <Date>2016-10-01</Date>
-            </Arrive>
-            <Leave>
-                <Time>16:10</Time>
-                <Date>2016-10-01</Date>
-            </Leave>
-        </Transition>
-        <Arrival>
-            <Name>truskavets</Name>
-            <Time>16:30</Time>
-            <Date>2016-10-01</Date>
-        </Arrival>
+        <Route>
+            <From>ivano-frankivsk</From>
+            <To>kyiv</To>
+            <RailCar>
+                <Number>3</Number>
+                <Seat>1</Seat>
+                <Seat>2</Seat>
+                <Seat>3</Seat>
+                <Seat>4</Seat>
+            </RailCar>
+        </Route>
+        <Route>
+            <From>lviv</From>
+            <To>brody</To>
+            <RailCar>
+                <Number>2</Number>
+                <Seat>5</Seat>
+            </RailCar>
+        </Route>
     </Train>
 </Data>

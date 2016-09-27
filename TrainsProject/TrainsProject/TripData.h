@@ -29,6 +29,7 @@ public:
 	Train getTrain() const;
 
 	void setDate(string);
+	void setDataOfBookedSeats(vector<RailCar>&);
 	void setDeparturePoint(string);
 	void setArrivalPoint(string);
 	void setTrain(Train);
