@@ -22,7 +22,7 @@ void RailCarView::draw()
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
 		brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
@@ -81,7 +81,7 @@ void RailCarView::drawSeat(int num)
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 	{
 		if (num <= 1 || (num > 3 && num <= 5) || (num > 7 && num <= 9) || (num > 11 && num <= 13))
@@ -134,7 +134,7 @@ void RailCarView::drawSelected(int selected)
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
@@ -174,9 +174,9 @@ View* RailCarView::handle()
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
+	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
-	vectorOfBookedSeats.push_back(5);
+	//vectorOfBookedSeats.push_back(5);
 	drawSold(vectorOfBookedSeats, selected);
 	drawSelected(selected);
 
