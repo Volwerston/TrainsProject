@@ -6,11 +6,13 @@
 #include "TripData.h"
 #include "ChooseCarView.h"
 #include "RailCarView.h"
+#include "Console.h"
 
 using namespace std;
 
 int main()
 {
+	setConsoleProperties();
 	vector<Train> trains = getTrainsByDate("2016-10-02");
 
 	TripData tripData("2016-10-02", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
