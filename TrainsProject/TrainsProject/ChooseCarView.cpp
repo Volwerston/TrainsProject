@@ -59,8 +59,10 @@ void ChooseCarView::draw()
 {
 	View::clean();
 
+
+	setCursorAt(0, 1);
 	string mask = "#    Type         Price     Places    Free places    ";
-	cout << mask << endl;
+	printAtCenter(mask, headline);
 
 	Train aTrain = tripData.getTrain();
 	vector<RailCar> railCars = aTrain.getVectorOfRailCars();
@@ -132,7 +134,8 @@ void ChooseCarView::draw()
 		toPrint += " " + toString(railCars[i].getNumberOfSeats()) + string(9 - toString(railCars[i].getNumberOfSeats()).size(), ' ');
 		toPrint += " " + toString(numOfFreeSeats) + string(14 - toString(numOfFreeSeats).size(), ' ');
 
-		cout << toPrint << endl;
+		setCursorAt(0, 3+i);
+		printAtCenter(toPrint, stats);
 	}
 }
 

@@ -41,7 +41,7 @@ public:
 		int _font = static_cast<int>(font);
 		int _back = static_cast<int>(background);
 
-		SetConsoleTextAttribute(hconsole, _font + 16 * _back);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _font + 16 * _back);
 
 		ostringstream out;
 		out << text;
@@ -51,7 +51,7 @@ public:
 
 		setCursorAt(cursor.X, cursor.Y);
 
-		SetConsoleTextAttribute(hconsole, 15);  // return to normal state
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // return to normal state
 	}
 
 	string indicateColor(Color) const;

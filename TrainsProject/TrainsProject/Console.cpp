@@ -4,8 +4,18 @@ HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND hwnd = GetConsoleWindow();
 HDC hdc = GetDC(hwnd);
 COORD cursor;
+RECT rect;
+
 const int consoleWidth = 123;
 const int consoleHeight = 39;
+const int fontWidth = 11;
+const int fontHeight = 18;
+
+Printer headline(Color::YELLOW, Color::BLUE);
+Printer menuPassive(Color::YELLOW, Color::BROWN);
+Printer menuActive(Color::YELLOW, Color::RED);
+Printer techData(Color::BLACK, Color::WHITE);
+Printer stats(Color::WHITE, Color::LIGHT_BLUE);
 
 void scrollOff(int width, int height)
 {
