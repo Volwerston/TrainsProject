@@ -6,7 +6,7 @@ class View
 {
 public:
 	View();
-	View(TripData tripData);
+	View(TripData tripData); 
 
 	virtual void draw() = 0;
 	virtual View* handle() = 0;

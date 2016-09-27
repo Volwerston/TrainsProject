@@ -23,7 +23,7 @@ extern RECT rect;
 
 extern Printer headline;
 extern Printer menuActive;
-extern Printer menuPassive;
+extern Printer menuPassive; 
 extern Printer techData;
 extern Printer stats;
 

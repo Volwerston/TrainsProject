@@ -49,7 +49,7 @@ bool intersect(Route r1, Route r2, vector<Station>& st)
 
 	return toReturn;
 }
-
+ 
 ChooseCarView::ChooseCarView(const TripData& t)
 	: tripData(t)
 {

@@ -89,7 +89,7 @@ void printAtCenter(string st, const Printer& p)
 }
 
 BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2)
-{
+{ 
 	POINT pt;
 	MoveToEx(hdc, x1, y1, &pt);
 	return LineTo(hdc, x2, y2);

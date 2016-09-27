@@ -7,7 +7,7 @@ View::View()
 }
 
 View::View(TripData tripData)
-{
+{ 
 }
 
 void View::drawBackground(int left, int top, int width, int height, COLORREF background) // draws background of the game

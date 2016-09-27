@@ -12,4 +12,4 @@ public:
 	void draw();
 
 	View* handle();
-};
+}; 
