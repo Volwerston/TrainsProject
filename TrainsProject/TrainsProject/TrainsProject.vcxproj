@@ -64,7 +64,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithms.cpp" />
+    <ClCompile Include="ChooseCarView.cpp" />
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="CreditCard\CreditCard.cpp" />
+    <ClCompile Include="CreditCard\Func.cpp" />
+    <ClCompile Include="CreditCard\Tests.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Printer.cpp" />
+    <ClCompile Include="RailCar.cpp" />
+    <ClCompile Include="RailCarView.cpp" />
+    <ClCompile Include="Route.cpp" />
+    <ClCompile Include="Station.cpp" />
+    <ClCompile Include="tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="Train.cpp" />
+    <ClCompile Include="TripData.cpp" />
+    <ClCompile Include="View.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Algorithms.h" />
+    <ClInclude Include="ChooseCarView.h" />
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="CreditCard\CreditCard.h" />
+    <ClInclude Include="CreditCard\Func.h" />
+    <ClInclude Include="CreditCard\Tests.h" />
+    <ClInclude Include="Printer.h" />
+    <ClInclude Include="RailCar.h" />
+    <ClInclude Include="RailCarView.h" />
+    <ClInclude Include="Route.h" />
+    <ClInclude Include="Station.h" />
+    <ClInclude Include="tinyxml2\tinyxml2.h" />
+    <ClInclude Include="Train.h" />
+    <ClInclude Include="TripData.h" />
+    <ClInclude Include="View.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Database\2016-10-01.xml" />
+    <Xml Include="Database\2016-10-02.xml" />
+    <Xml Include="Database\2016-10-03.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

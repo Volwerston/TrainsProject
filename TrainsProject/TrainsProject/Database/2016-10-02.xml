@@ -4,17 +4,17 @@
     <RailCar>
       <Number>1</Number>
       <Type>K</Type>
-      <Seats>16</Seats>
+      <Seats>24</Seats>
     </RailCar>
     <RailCar>
       <Number>2</Number>
-      <Type>P</Type>
+      <Type>K</Type>
       <Seats>24</Seats>
     </RailCar>
     <RailCar>
       <Number>3</Number>
-      <Type>L</Type>
-      <Seats>4</Seats>
+      <Type>K</Type>
+      <Seats>24</Seats>
     </RailCar>
     <RailCar>
       <Number>4</Number>

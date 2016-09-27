@@ -4,7 +4,7 @@ HANDLE hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 HWND hwnd = GetConsoleWindow();
 HDC hdc = GetDC(hwnd);
 COORD cursor;
-const int consoleWidth = 100;
+const int consoleWidth = 123;
 const int consoleHeight = 39;
 
 void scrollOff(int width, int height)

@@ -28,22 +28,3 @@ public:
 	vector<Route> getVectorOfRoutes() const;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-//¹     |    Name             |  From/departure time      |  To
-//12	  |	  Lviv-Kyiv       |  ivano-frankivsk / 2016-10-02 12:23  | Brodu   2016 - 10 - 02 12 : 23
-
-
-
-
-
-
