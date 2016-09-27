@@ -4,27 +4,27 @@
 <RailCar>
 <Number>1</Number>
 <Type>K</Type>
-<Seats>50</Seats>
+      <Seats>24</Seats>
 </RailCar>
 <RailCar>
 <Number>2</Number>
 <Type>K</Type>
-<Seats>50</Seats>
+      <Seats>24</Seats>
 </RailCar>
 <RailCar>
 <Number>3</Number>
 <Type>K</Type>
-<Seats>50</Seats>
+      <Seats>24</Seats>
 </RailCar>
 <RailCar>
 <Number>4</Number>
 <Type>K</Type>
-<Seats>50</Seats>
+      <Seats>24</Seats>
 </RailCar>
 <RailCar>
 <Number>5</Number>
 <Type>K</Type>
-<Seats>50</Seats>
+      <Seats>24</Seats>
 </RailCar>
 <Departure>
 <Name>ivano-frankivsk</Name>
@@ -65,6 +65,8 @@
 <Seat>5</Seat>
 <Seat>10</Seat>
 <Seat>17</Seat>
+<Seat>30</Seat>
+<Seat>41</Seat>
 </RailCar>
 </Route>
 <Route>
@@ -72,10 +74,10 @@
 <To>brody</To>
 <RailCar>
 <Number>2</Number>
-<Seat>1</Seat>
-<Seat>2</Seat>
-<Seat>3</Seat>
-<Seat>4</Seat>
+<Seat>5</Seat>
+<Seat>10</Seat>
+<Seat>17</Seat>
+<Seat>41</Seat>
 </RailCar>
 </Route>
 </Train>

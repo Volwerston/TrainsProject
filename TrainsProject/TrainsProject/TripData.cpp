@@ -79,6 +79,31 @@ void TripData::setNumberOfTrain(unsigned _numberOfTrain)
 	numberOfTrain = _numberOfTrain;
 }
 
+void TripData::setDataOfBookedSeats(vector<RailCar>& vec)
+{
+	Train newTrain = Train();
+
+	newTrain.setName(chosenTrain.getName());
+	newTrain.setNumber(chosenTrain.getNumber());
+	
+	for (int i = 0; i < chosenTrain.getVectorOfRoutes().size(); ++i)
+	{
+		newTrain.pushRouteToVectorOfRoutes(chosenTrain.getVectorOfRoutes()[i]);
+	}
+
+	for (int i = 0; i < chosenTrain.getVectorOfStations().size(); ++i)
+	{
+		newTrain.pushStationToVectorOfStations(chosenTrain.getVectorOfStations()[i]);
+	}
+
+	for (int i = 0; i < vec.size(); ++i)
+	{
+		newTrain.pushRailCarToVectorOfRailCars(vec[i]);
+	}
+
+	chosenTrain = newTrain;
+}
+
 void TripData::setNumberOfRailcar(unsigned _numberOfRailCar)
 {
 	numberOfRailCar = _numberOfRailCar;

@@ -7,7 +7,7 @@ class Train
 {
 	string name;
 	unsigned number;
-	vector<RailCar> vectorOfRailCars;
+	vector<RailCar> vectorOfRailCars; 
 	vector<Station> vectorOfStations;
 	vector<Route> vectorOfRoutes;
 
