@@ -16,126 +16,92 @@ RailCar readRailCar(XMLElement* railCar)
 {
 
 	RailCar toReturn;
-	int number;
-	int numOfSeats;
-	string typeOfCar;
+	unsigned num;
 
-	// gets railcar's number/type/number of seats
-	XMLElement* railCarNumber = railCar->FirstChildElement("Number");
-	railCarNumber->QueryIntText(&number);
-	XMLElement* railCarType = railCar->FirstChildElement("Type");
-	typeOfCar = railCarType->GetText();
-	XMLElement* seatsNumber = railCar->FirstChildElement("Seats");
-	seatsNumber->QueryIntText(&numOfSeats);
+	railCar->QueryUnsignedAttribute("number", &num);
+	toReturn.setNumber(num);
 
-	toReturn.setNumber(number);
-	toReturn.setNumberOfSeats(numOfSeats);
+	string type = railCar->Attribute("type");
 
-	if (typeOfCar == "L")
+	if (type == "L")
 	{
 		toReturn.setType(TypeOfRailCar::FirstClass);
+		toReturn.setNumberOfSeats(4);
 	}
-	else if (typeOfCar == "K")
+	else if (type == "K")
 	{
 		toReturn.setType(TypeOfRailCar::SecondClass);
+		toReturn.setNumberOfSeats(16);
 	}
-	else if (typeOfCar == "P")
+	else
 	{
 		toReturn.setType(TypeOfRailCar::ThirdClass);
+		toReturn.setNumberOfSeats(24);
 	}
 
 	return toReturn;
 }
 
-Station readStation(XMLElement* transition)
+Station readStation(XMLElement* station)
 {
 	Station toReturn;
 
-	string transitionName;
+	string stationName;
 	string arrivalTime;
-	string arrivalDate;
 	string departureTime;
-	string departureDate;
 
-	// gets stations' name/ time of arrival / time of departure /
-	XMLElement* nameOfStation = transition->FirstChildElement("Name");
-	transitionName = nameOfStation->GetText();
+	stationName = station->Attribute("name");
+	departureTime = station->Attribute("leaveTime");
+	arrivalTime = station->Attribute("arriveTime");
 
-	XMLElement* arriveData = transition->FirstChildElement("Arrive");
-	XMLElement* arriveTime = arriveData->FirstChildElement("Time");
-	arrivalTime = arriveTime->GetText();
-	XMLElement* arriveDate = arriveData->FirstChildElement("Date");
-	arrivalDate = arriveDate->GetText();
-
-	XMLElement* departData = transition->FirstChildElement("Leave");
-	XMLElement* departTime = departData->FirstChildElement("Time");
-	departureTime = departTime->GetText();
-	XMLElement* departDate = departData->FirstChildElement("Date");
-	departureDate = departDate->GetText();
-
-	toReturn.setName(transitionName);
-	toReturn.setTimeOfArrival(arrivalDate + " " + arrivalTime);
-	toReturn.setTimeOfDeparture(departureDate + " " + departureTime);
+	toReturn.setName(stationName);
+	toReturn.setTimeOfArrival(arrivalTime);
+	toReturn.setTimeOfDeparture(departureTime);
 
 	return toReturn;
 }
-
-RailCar readBookedSeats(XMLElement* railCar)
-{
-	RailCar toReturn;
-
-	// gets the number of railcar
-	XMLElement* railCarNum = railCar->FirstChildElement("Number");
-
-	int numOfRailCar;
-
-	railCarNum->QueryIntText(&numOfRailCar);
-
-	toReturn.setNumber(numOfRailCar);
-
-	XMLElement* bookedSeats = railCar->FirstChildElement("Seat");
-	 
-	// gets numbers of booked seats in the railcar
-	while (bookedSeats != nullptr)
-	{
-		int seatNum;
-		bookedSeats->QueryIntText(&seatNum);
-		toReturn.pushSeatToVectorOfBookedSeats(seatNum);
-		bookedSeats = bookedSeats->NextSiblingElement("Seat");
-	}
-
-	return toReturn;
-}
-
 
 Route readRoute(XMLElement* route)
 {
 	Route toReturn;
 
-	string firstStation;
-	string lastStation;
+	string startPoint = route->Attribute("startPoint");
+	string endPoint = route->Attribute("endPoint");
 
-	// gets route's first / last station
-	XMLElement* from = route->FirstChildElement("From");
-	firstStation = from->GetText();
-	XMLElement* to = route->FirstChildElement("To");
-	lastStation = to->GetText();
+	toReturn.setDepartureStation(startPoint);
+	toReturn.setArrivalStation(endPoint);
 
-	toReturn.setDepartureStation(firstStation);
-	toReturn.setArrivalStation(lastStation);
+	vector<RailCar> bookingData;
 
-	vector<RailCar> routeBookingData;
+	XMLElement* bookedCar = route->FirstChildElement("RailCar");
 
-	XMLElement* railCar = route->FirstChildElement("RailCar");
-
-	while (railCar != nullptr)
+	while (bookedCar != nullptr)
 	{
-		RailCar railCarBuf = readBookedSeats(railCar);
-		routeBookingData.push_back(railCarBuf);
-		railCar = railCar->NextSiblingElement("RailCar");
+		RailCar aCar;
+		unsigned num;
+
+		bookedCar->QueryUnsignedAttribute("number", &num);
+
+		aCar.setNumber(num);
+
+		XMLElement* bookedSeat = bookedCar->FirstChildElement("BookedSeat");
+
+		while (bookedSeat != nullptr)
+		{
+			unsigned seatNum;
+
+			bookedSeat->QueryUnsignedText(&seatNum);
+			aCar.pushSeatToVectorOfBookedSeats(seatNum);
+
+			bookedSeat = bookedSeat->NextSiblingElement("BookedSeat");
+		}
+
+		bookingData.push_back(aCar);
+
+		bookedCar = bookedCar->NextSiblingElement("RailCar");
 	}
 
-	toReturn.setBookingData(routeBookingData);
+	toReturn.setBookingData(bookingData);
 
 	return toReturn;
 }
@@ -143,7 +109,6 @@ Route readRoute(XMLElement* route)
 vector<Train> getTrainsByDate(const string& date)
 {
 	vector<Train> toReturn;
-
 
 	// loads data
 	string filePath = "Database/" + date + ".xml";
@@ -159,82 +124,72 @@ vector<Train> getTrainsByDate(const string& date)
 
 		while (train != nullptr)
 		{
-			Train currTrain;
+			Train aTrain;
 
-			// gets the number of train
-			XMLElement* trainNumber = train->FirstChildElement("Number");
-			int numberOfTrain;
-			trainNumber->QueryIntText(&numberOfTrain);
-			currTrain.setNumber(numberOfTrain);
+			unsigned num;
+			train->QueryUnsignedAttribute("number", &num);
+
+			aTrain.setNumber(num);
 
 			XMLElement* railCar = train->FirstChildElement("RailCar");
 
-			// gets the data about all railcars in the train
 			while (railCar != nullptr)
 			{
-				RailCar railCarBuf = readRailCar(railCar);
-				currTrain.pushRailCarToVectorOfRailCars(railCarBuf);
+				RailCar toPush = readRailCar(railCar);
+				aTrain.pushRailCarToVectorOfRailCars(toPush);
 				railCar = railCar->NextSiblingElement("RailCar");
 			}
 
-			XMLElement* departurePlace = train->FirstChildElement("Departure");
 
-			Station depart;
+			XMLElement* departure = train->FirstChildElement("Departure");
 
-			string departName;
-			string departTime;
+			Station toPush;
 
-			// read the departure station
-			XMLElement* departureName = departurePlace->FirstChildElement("Name");
-			departName = departureName->GetText();
-			XMLElement* departureTime = departurePlace->FirstChildElement("Time");
-			departTime = departureTime->GetText();
 
-			depart.setName(departName);
-			depart.setTimeOfDeparture(date + " " + departTime);
+			// read departure station
+			string stationName = departure->Attribute("name");
+			string departureTime = departure->Attribute("leaveTime");
+			string arrivalTime;
 
-			currTrain.pushStationToVectorOfStations(depart);
+			toPush.setName(stationName);
+			toPush.setTimeOfDeparture(departureTime);
 
-			XMLElement* transition = train->FirstChildElement("Transition");
+			aTrain.pushStationToVectorOfStations(toPush);
 
-			// gets transitional station
-			while (transition != nullptr)
+			XMLElement* station = train->FirstChildElement("Station");
+
+
+			// read all transitional stations
+			while (station != nullptr)
 			{
-				Station transitionalStation = readStation(transition);
-				currTrain.pushStationToVectorOfStations(transitionalStation);
-				transition = transition->NextSiblingElement("Transition");
+				toPush = readStation(station);
+				aTrain.pushStationToVectorOfStations(toPush);
+				station = station->NextSiblingElement("Station");
 			}
 
-			// gets the arrival station
-			XMLElement* arrivalPoint = train->FirstChildElement("Arrival");
-			Station arrivalStation;
-			string arrivalName;
-			string arrivalTime;
-			string arrivalDate;
 
-			XMLElement* arriveName = arrivalPoint->FirstChildElement("Name");
-			arrivalName = arriveName->GetText();
-			XMLElement* arriveTime = arrivalPoint->FirstChildElement("Time");
-			arrivalTime = arriveTime->GetText();
-			XMLElement* arriveDate = arrivalPoint->FirstChildElement("Date");
-			arrivalDate = arriveDate->GetText();
+			// read arrival station
+			XMLElement* arrival = train->FirstChildElement("Arrival");
+			stationName = arrival->Attribute("name");
+			arrivalTime = arrival->Attribute("arriveTime");
 
-			arrivalStation.setName(arrivalName);
-			arrivalStation.setTimeOfArrival(arrivalDate + " " + arrivalTime);
+			toPush.setName(stationName);
+			toPush.setTimeOfArrival(arrivalTime);
 
-			currTrain.pushStationToVectorOfStations(arrivalStation);
+			aTrain.pushStationToVectorOfStations(toPush);
 
 			XMLElement* route = train->FirstChildElement("Route");
 
-			// gets all booked routes 
+			// read routes 
+
 			while (route != nullptr)
 			{
-				Route currRoute = readRoute(route);
-				currTrain.pushRouteToVectorOfRoutes(currRoute);
+				Route toPush = readRoute(route);
+				aTrain.pushRouteToVectorOfRoutes(toPush);
 				route = route->NextSiblingElement("Route");
 			}
 
-			toReturn.push_back(currTrain);
+			toReturn.push_back(aTrain);
 
 			// go to next train
 			train = train->NextSiblingElement("Train");
@@ -254,111 +209,53 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 	{
 		XMLElement* train = doc.NewElement("Train");
 
+		train->SetAttribute("number", vec[i].getNumber());
+
 		vector<RailCar> railCars = vec[i].getVectorOfRailCars();
 
 		for (size_t j = 0; j < railCars.size(); ++j)
 		{
 			XMLElement* railCar = doc.NewElement("RailCar");
-			XMLElement* number = doc.NewElement("Number");
-			number->SetText(railCars[j].getNumber());
-			XMLElement* type = doc.NewElement("Type");
-			
+			railCar->SetAttribute("number", railCars[j].getNumber());
+
 			
 			if (railCars[j].getType() == TypeOfRailCar::FirstClass)
 			{
-				type->SetText("L");
+				railCar->SetAttribute("type", "L");
 			}
 			else if (railCars[j].getType() == TypeOfRailCar::SecondClass)
 			{
-				type->SetText("K");
+				railCar->SetAttribute("type", "K");
 			}
 			else
 			{
-				type->SetText("P");
+				railCar->SetAttribute("type", "P");
 			}
 
-			XMLElement* seats = doc.NewElement("Seats");
-			seats->SetText(railCars[j].getNumberOfSeats());
-
-			railCar->InsertEndChild(number);
-			railCar->InsertEndChild(type);
-			railCar->InsertEndChild(seats);
 			train->InsertEndChild(railCar);
 		}
 
+		vector<Station> stations = vec[i].getVectorOfStations();
+
 		XMLElement* departure = doc.NewElement("Departure");
-		XMLElement* name = doc.NewElement("Name");
-		name->SetText(vec[i].getVectorOfStations()[0].getName().c_str());
-		XMLElement* time = doc.NewElement("Time");
-
-		string departureTime = vec[i].getVectorOfStations()[0].getTimeOfDeparture().substr(11);
-
-		time->SetText(departureTime.c_str());
-		
-		departure->InsertEndChild(name);
-		departure->InsertEndChild(time);
+		departure->SetAttribute("name", stations[0].getName().c_str());
+		departure->SetAttribute("leaveTime", stations[0].getTimeOfDeparture().c_str());
 
 		train->InsertEndChild(departure);
 
-		vector<Station> stations = vec[i].getVectorOfStations();
-
 		for (size_t j = 1; j < stations.size() - 1; ++j)
 		{
-			XMLElement* transition = doc.NewElement("Transition");
-			XMLElement* name = doc.NewElement("Name");
-			name->SetText(stations[j].getName().c_str());
+			XMLElement* station = doc.NewElement("Station");
+			station->SetAttribute("name", stations[j].getName().c_str());
+			station->SetAttribute("arriveTime", stations[j].getTimeOfArrival().c_str());
+			station->SetAttribute("leaveTime", stations[j].getTimeOfDeparture().c_str());
 
-			XMLElement* arrive = doc.NewElement("Arrive");
-
-			XMLElement* arrivalTime = doc.NewElement("Time");
-			XMLElement* arrivalDate = doc.NewElement("Date");
-			
-			string arriveTime = stations[j].getTimeOfArrival().substr(11);
-			string arriveDate = stations[j].getTimeOfArrival().substr(0, 10);
-
-			arrivalTime->SetText(arriveTime.c_str());
-			arrivalDate->SetText(arriveDate.c_str());
-
-			arrive->InsertEndChild(arrivalTime);
-			arrive->InsertEndChild(arrivalDate);
-
-			XMLElement* leave = doc.NewElement("Leave");
-
-			string departTime = stations[j].getTimeOfDeparture().substr(11);
-			string departDate = stations[j].getTimeOfArrival().substr(0, 10);
-
-			XMLElement* departureTime = doc.NewElement("Time");
-			XMLElement* departureDate = doc.NewElement("Date");
-
-			departureTime->SetText(departTime.c_str());
-			departureDate->SetText(departDate.c_str());
-
-			leave->InsertEndChild(departureTime);
-			leave->InsertEndChild(departureDate);
-
-			transition->InsertEndChild(name);
-			transition->InsertEndChild(arrive);
-			transition->InsertEndChild(leave);
-
-			train->InsertEndChild(transition);
+			train->InsertEndChild(station);
 		}
 
 		XMLElement* arrival = doc.NewElement("Arrival");
-		XMLElement* arrivalName = doc.NewElement("Name");
-		arrivalName->SetText(stations[stations.size() - 1].getName().c_str());
-
-		string arrivalTime = stations[stations.size() - 1].getTimeOfArrival().substr(11);
-		string arrivalDate = stations[stations.size() - 1].getTimeOfArrival().substr(0, 10);
-
-		XMLElement* arriveTime = doc.NewElement("Time");
-		XMLElement* arriveDate = doc.NewElement("Date");
-
-		arriveTime->SetText(arrivalTime.c_str());
-		arriveDate->SetText(arrivalDate.c_str());
-
-		arrival->InsertEndChild(arrivalName);
-		arrival->InsertEndChild(arriveTime);
-		arrival->InsertEndChild(arriveDate);
+		arrival->SetAttribute("name", stations[stations.size() - 1].getName().c_str());
+		arrival->SetAttribute("arriveTime", stations[stations.size() - 1].getTimeOfArrival().c_str());
 
 		train->InsertEndChild(arrival);
 
@@ -367,35 +264,30 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 		for (size_t j = 0; j < routes.size(); ++j)
 		{
 			XMLElement* route = doc.NewElement("Route");
-			XMLElement* routeFrom = doc.NewElement("From");
-			XMLElement* routeTo = doc.NewElement("To");
+			//
 
-			routeFrom->SetText(routes[j].getDepartureStation().c_str());
-			routeTo->SetText(routes[j].getArrivalStation().c_str());
-
-			route->InsertEndChild(routeFrom);
-			route->InsertEndChild(routeTo);
+			route->SetAttribute("startPoint", routes[j].getDepartureStation().c_str());
+			route->SetAttribute("endPoint", routes[j].getArrivalStation().c_str());
 
 			vector<RailCar> bookingData = routes[j].getBookingData();
 
-			for (size_t k = 0; k < bookingData.size(); ++k)
+			for (int k = 0; k < bookingData.size(); ++k)
 			{
-				XMLElement* railCarSnippet = doc.NewElement("RailCar");
+				XMLElement* railCar = doc.NewElement("RailCar");
 
-				XMLElement* numberSnippet = doc.NewElement("Number");
-				numberSnippet->SetText(bookingData[k].getNumber());
-				railCarSnippet->InsertEndChild(numberSnippet);
+				railCar->SetAttribute("number", bookingData[k].getNumber());
 
-				vector<unsigned int> seats = bookingData[k].getVectotOfBookedSeats();
+				vector<unsigned> seats = bookingData[k].getVectotOfBookedSeats();
 
-				for (size_t l = 0; l < seats.size(); ++l)
+				for (int l = 0; l < seats.size(); ++l)
 				{
-					XMLElement* seatSnippet = doc.NewElement("Seat");
-					seatSnippet->SetText(seats[l]);
-					railCarSnippet->InsertEndChild(seatSnippet);
+					XMLElement* bookedSeat = doc.NewElement("BookedSeat");
+					bookedSeat->SetText(seats[l]);
+
+					railCar->InsertEndChild(bookedSeat);
 				}
 
-				route->InsertEndChild(railCarSnippet);
+				route->InsertEndChild(railCar);
 			}
 
 			train->InsertEndChild(route);
