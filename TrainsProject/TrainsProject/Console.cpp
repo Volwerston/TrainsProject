@@ -54,12 +54,8 @@ void setConsoleProperties()
 	DrawMenuBar(GetConsoleWindow());
 
 	// configuring buffer and window
-	SMALL_RECT r;
-	r.Left = 0;
-	r.Top = 0;
-	r.Right = consoleWidth - 1;
-	r.Bottom = consoleHeight - 1;
-	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &r);
+
+	setConsoleSize(consoleWidth, consoleHeight);
 
 	COORD c;
 	c.X = consoleWidth;
@@ -86,6 +82,22 @@ void printAtCenter(string st, const Printer& p)
 	int x_pos = (consoleWidth - size) / 2 + (consoleWidth - size) % 2;
 	setCursorAt(x_pos, cursor.Y);
 	p.print(st);
+}
+
+void setConsoleSize(int width, int height)
+{
+	HANDLE consol;
+	consol = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD c;
+	c.X = width;
+	c.Y = height;
+	SetConsoleScreenBufferSize(consol, c);
+	SMALL_RECT r;
+	r.Left = 0;
+	r.Top = 0;
+	r.Right = width - 1;
+	r.Bottom = height - 1;
+	SetConsoleWindowInfo(consol, TRUE, &r);
 }
 
 BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2)

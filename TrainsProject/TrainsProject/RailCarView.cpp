@@ -363,6 +363,7 @@ View* RailCarView::handle()
 		}
 	}
 	
+	/*
 	SelectObject(hdc, penForRailCarSeats1);
 	SelectObject(hdc, penForRailCarSeatsBold1);
 	SelectObject(hdc, brushForRailCarSeat1);
@@ -374,6 +375,7 @@ View* RailCarView::handle()
 	DeleteObject(brushForRailCarSeat2);
 	DeleteObject(brushForRailCarSeatSelected2);
 	DeleteObject(brushForRailCarSeatSold2);
+	*/
 
 	return nextView;
 }

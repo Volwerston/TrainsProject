@@ -15,6 +15,8 @@ int main()
 	setConsoleProperties();
 	vector<Train> trains = getTrainsByDate("2016-10-01");
 
+	//setConsoleSize(123, 39);
+
 	TripData tripData("2016-10-01", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
 
 	/*
