@@ -19,7 +19,7 @@ void View::drawBackground(int left, int top, int width, int height, COLORREF bac
 	SetDCPenColor(hdc, background);
 
 	GetClientRect(hwnd, &rect);
-	Rectangle(hdc, left, top, left + width, top + height);
+	RoundRect(hdc, left, top, left + width, top + height, 0, 0);
 }
 
 void View::clean()

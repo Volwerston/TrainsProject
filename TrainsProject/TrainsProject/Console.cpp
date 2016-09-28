@@ -6,8 +6,8 @@ HDC hdc = GetDC(hwnd);
 COORD cursor;
 RECT rect;
 
-const int consoleWidth = 80;
-const int consoleHeight = 35;
+const int consoleWidth = 123;
+const int consoleHeight = 39;
 const int fontWidth = 11;
 const int fontHeight = 18;
 
@@ -54,12 +54,8 @@ void setConsoleProperties()
 	DrawMenuBar(GetConsoleWindow());
 
 	// configuring buffer and window
-	SMALL_RECT r;
-	r.Left = 0;
-	r.Top = 0;
-	r.Right = consoleWidth - 1;
-	r.Bottom = consoleHeight - 1;
-	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &r);
+
+	setConsoleSize(consoleWidth, consoleHeight);
 
 	COORD c;
 	c.X = consoleWidth;
@@ -92,17 +88,18 @@ void setConsoleSize(int width, int height)
 {
 	HANDLE consol;
 	consol = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD c;
+	c.X = width;
+	c.Y = height;
+	SetConsoleScreenBufferSize(consol, c);
 	SMALL_RECT r;
 	r.Left = 0;
 	r.Top = 0;
 	r.Right = width - 1;
 	r.Bottom = height - 1;
 	SetConsoleWindowInfo(consol, TRUE, &r);
-	COORD c;
-	c.X = width;
-	c.Y = height;
-	SetConsoleScreenBufferSize(consol, c);
 }
+
 BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2)
 { 
 	POINT pt;
