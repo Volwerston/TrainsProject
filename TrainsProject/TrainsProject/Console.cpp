@@ -6,8 +6,8 @@ HDC hdc = GetDC(hwnd);
 COORD cursor;
 RECT rect;
 
-const int consoleWidth = 123;
-const int consoleHeight = 39;
+const int consoleWidth = 80;
+const int consoleHeight = 35;
 const int fontWidth = 11;
 const int fontHeight = 18;
 
