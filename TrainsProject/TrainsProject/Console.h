@@ -13,6 +13,8 @@ void printAtCenter(string st, const Printer& p);
 
 void scrollOff(int width, int height);
 
+void setConsoleSize(int width, int height);
+
 BOOL DrawLine(HDC, int, int, int, int);
 
 extern HWND hwnd;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Printer.h"
-
+#include "Console.h"
 using namespace std;
 
 Printer::Printer(Color f, Color back)
@@ -50,6 +50,23 @@ string Printer::indicateColor(Color _color) const
 	default: col = "No such color";
 	}
 	return col;
+}
+void Printer::print(string text) const
+{
+
+	int _font = static_cast<int>(font);
+	int _back = static_cast<int>(background);
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _font + 16 * _back);
+
+
+	cout << text;
+
+	cursor.X += text.size();
+
+	setCursorAt(cursor.X, cursor.Y);
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // return to normal state
 }
 
 string Printer::getFont() const

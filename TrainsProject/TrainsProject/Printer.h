@@ -3,6 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
+//#include "Console.h"
 
 using namespace std;
 
@@ -34,26 +35,7 @@ class Printer
 public:
 	Printer(Color = Color::WHITE, Color = Color::BLACK);
 
-	template <class T>
-	void print(T text) const
-	{
-
-		int _font = static_cast<int>(font);
-		int _back = static_cast<int>(background);
-
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _font + 16 * _back);
-
-		ostringstream out;
-		out << text;
-		cout << out.str() << endl;
-
-		cursor.X += out.str().size();
-
-		setCursorAt(cursor.X, cursor.Y);
-
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  // return to normal state
-	}
-
+	void print(string text) const;
 	string indicateColor(Color) const;
 
 	string getFont() const;
