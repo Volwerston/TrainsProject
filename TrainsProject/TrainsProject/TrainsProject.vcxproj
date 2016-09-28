@@ -100,8 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Database\2016-10-01.xml" />
-    <Xml Include="Database\2016-10-02.xml" />
-    <Xml Include="Database\2016-10-03.xml" />
+    <Xml Include="Database\2016-10-02.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="Database\2016-10-04.xml" />
+    <Xml Include="Database\2016-10-05.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
