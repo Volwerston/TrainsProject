@@ -8,6 +8,7 @@
 #include "Train.h"
 #include "RailCar.h"
 #include "TripData.h"
+#include "ChooseCarView.h"
 
 class RailCarView :public View
 {

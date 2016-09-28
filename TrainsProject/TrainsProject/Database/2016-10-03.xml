@@ -62,8 +62,6 @@
             <RailCar>
                 <Number>1</Number>
                 <Seat>1</Seat>
-                <Seat>2</Seat>
-                <Seat>3</Seat>
                 <Seat>4</Seat>
             </RailCar>
             <RailCar>
