@@ -48,7 +48,7 @@ public:
 		cout << out.str() << endl;
 
 		cursor.X += out.str().size();
-
+		 
 		setCursorAt(cursor.X, cursor.Y);
 
 		SetConsoleTextAttribute(hconsole, 15);  // return to normal state
