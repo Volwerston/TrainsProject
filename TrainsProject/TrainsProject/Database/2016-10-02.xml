@@ -1,20 +1,29 @@
 <Data>
-  <Train>
-    <Number>43</Number>
-    <RailCar>
-      <Number>1</Number>
-      <Type>K</Type>
-      <Seats>16</Seats>
+  <Train number="43">
+    <RailCar number="1" type="L"/>
+    <RailCar number="2" type="K"/>
+    <RailCar number="3" type="P"/>
+    <RailCar number="4" type="P"/>
+    <RailCar number="5" type="P"/>
+    <Departure name="ivano-frankivsk" leaveTime="13:55"/>
+    <Station name="lviv" arriveTime="16:30" leaveTime="16:50"/>
+    <Station name="brody" arriveTime="18:03" leaveTime="18:05"/>
+    <Arrival name="kyiv" arriveTime="23:50"/>
+    <Route startPoint="lviv" endPoint="brody">
+      <RailCar number="1">
+        <BookedSeat>1</BookedSeat>
+        <BookedSeat>2</BookedSeat>
+        <BookedSeat>3</BookedSeat>
     </RailCar>
     <RailCar>
       <Number>2</Number>
-      <Type>P</Type>
+      <Type>K</Type>
       <Seats>24</Seats>
     </RailCar>
     <RailCar>
       <Number>3</Number>
-      <Type>L</Type>
-      <Seats>4</Seats>
+      <Type>K</Type>
+      <Seats>24</Seats>
     </RailCar>
     <RailCar>
       <Number>4</Number>
@@ -60,6 +69,13 @@
     <Route>
       <From>ivano-frankivsk</From>
       <To>kyiv</To>
+      <RailCar>
+        <Number>1</Number>
+        <Seat>1</Seat>
+        <Seat>2</Seat>
+        <Seat>3</Seat>
+        <Seat>4</Seat>
+      </RailCar>
       <RailCar>
         <Number>3</Number>
         <Seat>1</Seat>

@@ -10,7 +10,7 @@ class Train
 	vector<RailCar> vectorOfRailCars; 
 	vector<Station> vectorOfStations;
 	vector<Route> vectorOfRoutes;
-	 
+
 public:
 	Train();
 	Train(string, unsigned, vector<RailCar>, vector<Station>, vector<Route>);
@@ -27,23 +27,3 @@ public:
 	vector<Station> getVectorOfStations() const;
 	vector<Route> getVectorOfRoutes() const;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-//¹     |    Name             |  From/departure time      |  To
-//12	  |	  Lviv-Kyiv       |  ivano-frankivsk / 2016-10-02 12:23  | Brodu   2016 - 10 - 02 12 : 23
-
-
-
-
-
-

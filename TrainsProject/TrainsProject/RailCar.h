@@ -13,7 +13,7 @@ class RailCar
 	unsigned number;
 	unsigned numberOfSeats;
 	TypeOfRailCar type;
-	vector<unsigned> vectorOfBookedSeats; // push to this vector numberOfseat, that is ordered
+	vector<unsigned> vectorOfBookedSeats; // push to this vector numberOfseat, that are ordered
 public:
 	RailCar();
 	RailCar(unsigned, unsigned, TypeOfRailCar, vector<unsigned>);

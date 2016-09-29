@@ -10,19 +10,26 @@ HBRUSH brushForRailCarSeatSold1, brushForRailCarSeatSold2 = CreateSolidBrush(RGB
 HBRUSH brushForRailCarFirstClassSeat1, brushForRailCarFirstClassSeat2 = CreateSolidBrush(RGB(52, 152, 219));
 HBRUSH brushForRailCarFirstClassSeatSelected1, brushForRailCarFirstClassSeatSelected2 = CreateSolidBrush(RGB(142, 68, 173));
 
+Printer printer(Color::WHITE, Color::CYAN);
+
 RailCarView::RailCarView(const TripData _tripData) :tripData(_tripData) {}
 
 void RailCarView::draw()
 {
+	clean();
 	penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
 	brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 
 	RoundRect(hdc, 120, 100, 1220, 600, 100, 100);
 	
+	setCursorAt(55, 36);
+	printAtCenter("Press Enter to continue", printer);
+
+	brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
+	
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
 		brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
@@ -81,7 +88,6 @@ void RailCarView::drawSeat(int num)
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 	{
 		if (num <= 1 || (num > 3 && num <= 5) || (num > 7 && num <= 9) || (num > 11 && num <= 13))
@@ -134,7 +140,6 @@ void RailCarView::drawSelected(int selected)
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	//currentRailCar.setType(TypeOfRailCar::FirstClass);
 	penForRailCarSeats1 = (HPEN)SelectObject(hdc, penForRailCarSeats2);
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
@@ -171,15 +176,15 @@ View* RailCarView::handle()
 	int selected = 0;
 	bool chosen = false;
 
+	View *nextView = this;
+
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	currentRailCar.setType(TypeOfRailCar::FirstClass);
 	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
-	//vectorOfBookedSeats.push_back(5);
-	drawSold(vectorOfBookedSeats, selected);
 	drawSelected(selected);
-
+	drawSold(vectorOfBookedSeats, selected);
+	
 	while (!chosen)
 	{
 		switch (_getch())
@@ -327,26 +332,38 @@ View* RailCarView::handle()
 				}
 			}
 			break;
-		case 13:
+		case 32:
 			brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
-			drawSeat(selected);
-			vectorOfBookedSeats.push_back(selected);
-			tripData.pushToVectorOfSeats(selected);
-			drawSold(vectorOfBookedSeats, selected);
-			for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
+			if (!vectorOfBookedSeats.empty())
 			{
-				cout << vectorOfBookedSeats[i] << " ";
+				for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
+				{
+					if (selected != vectorOfBookedSeats[i])
+					{
+						vectorOfBookedSeats.push_back(selected);
+						tripData.pushToVectorOfSeats(selected);
+						break;
+					}
+				}
 			}
+			else
+			{
+				vectorOfBookedSeats.push_back(selected);
+				tripData.pushToVectorOfSeats(selected);
+			}
+			drawSeat(selected);
+			drawSold(vectorOfBookedSeats, selected);
 			break;
 		case 27:
 			return 0;
-		case 32:
+		case 13:
+			nextView = new ChooseCarView(tripData);
 			chosen = true;
 			break;
 		}
 	}
-
-	View *nextView = new RailCarView(tripData);
+	
+	/*
 	SelectObject(hdc, penForRailCarSeats1);
 	SelectObject(hdc, penForRailCarSeatsBold1);
 	SelectObject(hdc, brushForRailCarSeat1);
@@ -358,6 +375,7 @@ View* RailCarView::handle()
 	DeleteObject(brushForRailCarSeat2);
 	DeleteObject(brushForRailCarSeatSelected2);
 	DeleteObject(brushForRailCarSeatSold2);
+	*/
 
 	return nextView;
 }

@@ -49,7 +49,7 @@ bool intersect(Route r1, Route r2, vector<Station>& st)
 
 	return toReturn;
 }
-
+ 
 ChooseCarView::ChooseCarView(const TripData& t)
 	: tripData(t)
 {
@@ -59,8 +59,10 @@ void ChooseCarView::draw()
 {
 	View::clean();
 
+
+	setCursorAt(0, 1);
 	string mask = "#    Type         Price     Places    Free places    ";
-	cout << mask << endl;
+	printAtCenter(mask, headline);
 
 	Train aTrain = tripData.getTrain();
 	vector<RailCar> railCars = aTrain.getVectorOfRailCars();
@@ -132,70 +134,122 @@ void ChooseCarView::draw()
 		toPrint += " " + toString(railCars[i].getNumberOfSeats()) + string(9 - toString(railCars[i].getNumberOfSeats()).size(), ' ');
 		toPrint += " " + toString(numOfFreeSeats) + string(14 - toString(numOfFreeSeats).size(), ' ');
 
-		cout << toPrint << endl;
+		chooseOptions.push_back(toPrint);
 	}
+
+	chooseOptions.push_back("Go back");
 }
 
 View* ChooseCarView::handle()
 {
-	draw();
-
-	bool notChosen = true;
+	bool chosen = false;
 	unsigned numOfCar;
 
-	while (notChosen)
+	View* toReturn = nullptr;
+	int currItem = 0;
+
+	for (int i = 0; i < chooseOptions.size(); ++i)
 	{
-		cout << "Choose railcar: ";
-		cin >> numOfCar;
+		setCursorAt(0, 3 + 2*i);
 
-		if (numOfCar == -1)  // -1 - go back (I'll correct this A.S.A.P :)
+		if (i == currItem)
 		{
-			notChosen = false;
+			printAtCenter(chooseOptions[i], menuActive);
 		}
-		else if (numOfCar > 0)
+		else
 		{
-			
-			if (numOfCar <= tripData.getTrain().getVectorOfRailCars().size())
-			{
-				int numOfFreeSeats = tripData.getTrain().getVectorOfRailCars()[numOfCar - 1].getNumberOfSeats() - std::count(trainSnippet[numOfCar - 1].begin(), trainSnippet[numOfCar - 1].end(), true);
-
-				if (numOfFreeSeats > 0)
-				{
-					notChosen = false;
-				}
-			}
+			printAtCenter(chooseOptions[i], menuPassive);
 		}
 	}
 
-	View* toReturn;
+	int prevItem = 0;
 
-	if (numOfCar == -1)
+	while (!chosen)
 	{
-		toReturn = nullptr; // must be TrainsView!
-	}
-	else
-	{
-		tripData.setNumberOfRailcar(numOfCar);
-
-		Train aTrain = Train();
-		vector<RailCar> railCars = tripData.getTrain().getVectorOfRailCars();
-
-		for (int i = 0; i < trainSnippet.size(); ++i)
+		switch (_getch())
 		{
-			for (int j = 0; j < trainSnippet[i].size(); ++j)
+		case 224: // one of the arrows
+			switch (_getch())
 			{
-				if (trainSnippet[i][j])
+			case 72: // menu up
+				prevItem = currItem;
+
+				if (currItem == 0)
 				{
-					railCars[i].pushSeatToVectorOfBookedSeats(j);
+					currItem = chooseOptions.size() - 1;
+				}
+				else
+				{
+					--currItem;
+				}
+
+				setCursorAt(0, 3 + 2*prevItem);
+				printAtCenter(chooseOptions[prevItem], menuPassive);
+				setCursorAt(0, 3 + 2*currItem);
+				printAtCenter(chooseOptions[currItem], menuActive);
+				break;
+			case 80: // menu down
+				prevItem = currItem;
+
+				if (currItem == chooseOptions.size() - 1)
+				{
+					currItem = 0;
+				}
+				else
+				{
+					++currItem;
+				}
+
+				setCursorAt(0, 3 + 2*prevItem);
+				printAtCenter(chooseOptions[prevItem], menuPassive);
+				setCursorAt(0, 3 + 2*currItem);
+				printAtCenter(chooseOptions[currItem], menuActive);
+				break;
+			}
+			break;
+		case VK_RETURN: // Enter
+
+			if (currItem == chooseOptions.size() - 1)
+			{
+				toReturn = nullptr; // must be TrainView!
+				chosen = true;
+			}
+			else
+			{
+
+				int numOfFreePlaces = std::count(trainSnippet[currItem].begin(), trainSnippet[currItem].end(), true);
+				RailCar buf = tripData.getTrain().getVectorOfRailCars()[currItem];
+
+				if (buf.getNumberOfSeats() != numOfFreePlaces)
+				{
+					numOfCar = currItem + 1;
+
+					tripData.setNumberOfRailcar(numOfCar);
+
+					Train aTrain = Train();
+					vector<RailCar> railCars = tripData.getTrain().getVectorOfRailCars();
+
+					for (int i = 0; i < trainSnippet.size(); ++i)
+					{
+						for (int j = 0; j < trainSnippet[i].size(); ++j)
+						{
+							if (trainSnippet[i][j])
+							{
+								railCars[i].pushSeatToVectorOfBookedSeats(j);
+							}
+						}
+					}
+
+					tripData.setDataOfBookedSeats(railCars);
+
+					// you can find out the type of car by calling tripData.getTrain().getVectorOfRailCars()[tripData.getNumberOfRailCar() - 1].getType();
+
+					toReturn = new RailCarView(tripData);
+					chosen = true;
 				}
 			}
+			break;
 		}
-
-		tripData.setDataOfBookedSeats(railCars);
-
-		// you can find out the type of car by calling tripData.getTrain().getVectorOfRailCars()[tripData.getNumberOfRailCar() - 1].getType();
-
-		toReturn = new RailCarView(tripData);
 	}
 
 	return toReturn;

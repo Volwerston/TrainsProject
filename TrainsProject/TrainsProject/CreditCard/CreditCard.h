@@ -11,6 +11,6 @@ class CreditCard
 		CreditCard( double balance = 0, const string& number = string()  );	
 		double balance()const;
 		const CreditCard& operator+=( const CreditCard& rhs );
-		 
+
 		string number() const;
 };
