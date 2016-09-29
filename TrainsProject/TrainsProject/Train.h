@@ -10,7 +10,7 @@ class Train
 	vector<RailCar> vectorOfRailCars; 
 	vector<Station> vectorOfStations;
 	vector<Route> vectorOfRoutes;
-
+	 
 public:
 	Train();
 	Train(string, unsigned, vector<RailCar>, vector<Station>, vector<Route>);
