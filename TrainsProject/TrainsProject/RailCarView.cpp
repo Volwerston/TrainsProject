@@ -1,4 +1,6 @@
 #include "RailCarView.h"
+#include <iterator>
+#include <algorithm>
 
 HPEN penForRailCarSeats1, penForRailCarSeats2 = CreatePen(PS_SOLID, 4, RGB(44, 62, 80));
 HPEN penForRailCarSeatsBold1, penForRailCarSeatsBold2 = CreatePen(PS_SOLID, 8, RGB(44, 62, 80));
@@ -350,6 +352,13 @@ View* RailCarView::handle()
 			}
 			if (isBooked == true)
 			{
+				/*for (auto it = vectorOfBookedSeats.begin(); it != vectorOfBookedSeats.end(); it++)
+				{
+					if (selected == *it)
+					{
+						vectorOfBookedSeats.erase(it);
+					}
+				}*/
 				brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 				drawSeat(selected);
 			}
@@ -360,6 +369,18 @@ View* RailCarView::handle()
 				drawSeat(selected);
 			}
 			drawSold(vectorOfBookedSeats, selected);
+			for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
+			{
+				cout << vectorOfBookedSeats[i];
+			}
+			if (isBooked)
+			{
+				cout << "Booked";
+			}
+			else
+			{
+				cout << "Not booked";
+			}
 			break;
 		case 27:
 			return 0;
