@@ -271,7 +271,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 			vector<RailCar> bookingData = routes[j].getBookingData();
 
-			for (size_t k = 0; k < bookingData.size(); ++k)
+			for (int k = 0; k < bookingData.size(); ++k)
 			{
 				XMLElement* railCar = doc.NewElement("RailCar");
 
@@ -279,7 +279,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 				vector<unsigned> seats = bookingData[k].getVectotOfBookedSeats();
 
-				for (size_t l = 0; l < seats.size(); ++l)
+				for (int l = 0; l < seats.size(); ++l)
 				{
 					XMLElement* bookedSeat = doc.NewElement("BookedSeat");
 					bookedSeat->SetText(seats[l]);
@@ -326,7 +326,7 @@ vector<Train> getSuitableTrains(const vector<Train> &tr)
 			}
 			if (tripData.getArrivalPoint() == vectorOfStations[j].getName())
 			{
-				arrivalStationFound = true;
+				arrivalStationFound == true;
 				numberOfArrivalStation = j;
 			}
 		}
