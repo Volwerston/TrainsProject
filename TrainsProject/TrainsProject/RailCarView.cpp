@@ -346,19 +346,15 @@ View* RailCarView::handle()
 					}
 				}
 			}
-			else
-			{
-				vectorOfBookedSeats.push_back(selected);
-			}
 			if (isBooked == true)
 			{
-				/*for (auto it = vectorOfBookedSeats.begin(); it != vectorOfBookedSeats.end(); it++)
-				{
-					if (selected == *it)
-					{
-						vectorOfBookedSeats.erase(it);
-					}
-				}*/
+				//for (auto it = vectorOfBookedSeats.begin(); it != vectorOfBookedSeats.end(); it++)
+				//{
+				//	if (selected == *it)
+				//	{
+				//		vectorOfBookedSeats.erase(it);
+				//	}
+				//}
 				brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 				drawSeat(selected);
 			}
