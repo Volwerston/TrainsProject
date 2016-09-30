@@ -184,7 +184,7 @@ View* RailCarView::handle()
 	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
 	drawSelected(selected);
 	drawSold(vectorOfBookedSeats, selected);
-	
+	bool isBooked = false;
 	while (!chosen)
 	{
 		switch (_getch())
@@ -333,25 +333,32 @@ View* RailCarView::handle()
 			}
 			break;
 		case 32:
-			brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
+			isBooked = false;
 			if (!vectorOfBookedSeats.empty())
-			{
+			{	
 				for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
 				{
-					if (selected != vectorOfBookedSeats[i])
+					if (selected == vectorOfBookedSeats[i])
 					{
-						vectorOfBookedSeats.push_back(selected);
-						tripData.pushToVectorOfSeats(selected);
-						break;
+						isBooked = true;
 					}
 				}
 			}
 			else
 			{
 				vectorOfBookedSeats.push_back(selected);
-				tripData.pushToVectorOfSeats(selected);
 			}
-			drawSeat(selected);
+			if (isBooked == true)
+			{
+				brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
+				drawSeat(selected);
+			}
+			else
+			{
+				brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
+				vectorOfBookedSeats.push_back(selected);
+				drawSeat(selected);
+			}
 			drawSold(vectorOfBookedSeats, selected);
 			break;
 		case 27:
@@ -363,7 +370,6 @@ View* RailCarView::handle()
 		}
 	}
 	
-	/*
 	SelectObject(hdc, penForRailCarSeats1);
 	SelectObject(hdc, penForRailCarSeatsBold1);
 	SelectObject(hdc, brushForRailCarSeat1);
@@ -375,7 +381,6 @@ View* RailCarView::handle()
 	DeleteObject(brushForRailCarSeat2);
 	DeleteObject(brushForRailCarSeatSelected2);
 	DeleteObject(brushForRailCarSeatSold2);
-	*/
 
 	return nextView;
 }
