@@ -55,7 +55,7 @@ bool CreditCard::inputNumber()
 	cout<< "Please input credit card number:" <<endl;
 	cin>> mNumber;
 	while( !valid( *this ) )
-	{
+	{ 
 		cout<< "Incorrect number. Please try again." <<endl;
 		mNumber.clear();
 		cin>> mNumber;

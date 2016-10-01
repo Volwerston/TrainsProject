@@ -3,7 +3,7 @@
 bool valid( const CreditCard& card )	// return true if valid card and false otherwise	
 {
 	const char* number = card.number();
-	int digit = card.sNumberSize - 1;
+	int digit = 0; // ?
 	unsigned mult = 0, sumOdd = 0, sumEven = 0;
 
 	while( digit >= 0 )
