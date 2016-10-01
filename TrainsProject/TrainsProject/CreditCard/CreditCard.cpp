@@ -5,7 +5,8 @@
 
 using namespace std;
 
-const unsigned CreditCard::sSize = 16;
+const unsigned CreditCard::sNumberSize = 16;
+const unsigned CreditCard::sCvvSize = 3;
 
 double CreditCard::balance()const
 {
@@ -28,6 +29,16 @@ const char* CreditCard::number()const
 	return mNumber.c_str();
 }
 
+const string& CreditCard::expires()const
+{
+	return mExpires;
+}
+
+unsigned CreditCard::code()const
+{
+	return mCvvCode;
+}
+	
 bool CreditCard::charge( double amount )	// return true if success and false otherwise
 {
 	if( mBalance >= amount )
@@ -54,11 +65,33 @@ bool CreditCard::inputNumber()
 {
 	cout<< "Please input credit card number:" <<endl;
 	cin>> mNumber;
-	while( !valid( *this ) )
-	{
-		cout<< "Incorrect number. Please try again." <<endl;
-		mNumber.clear();
-		cin>> mNumber;
-	}
+	return( valid( *this ) );
 }
 	
+bool CreditCard::inputExpirationDate()
+{
+	bool exists = false;
+	unsigned d(0), m(0), y(0);
+
+	cout<< "Year:\t"; cin>> y;
+	cout<< "Month:\t"; cin>> m;
+	cout<< "Day:\t"; cin>> d;
+		
+	exists = dateExists( y,d,m );
+
+	mExpires = y;
+	mExpires += "-";
+	mExpires += m;
+	mExpires += "-";
+	mExpires += d;
+	
+	return exists;
+}
+
+bool CreditCard::inputCvvCode()
+{
+	string code;
+	cout<< "CVV code:\t" ;
+	cin>> code;
+	return ( "000" <= code && code <= "999" );
+}

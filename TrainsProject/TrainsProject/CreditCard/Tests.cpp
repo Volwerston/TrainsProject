@@ -57,10 +57,21 @@ void testCCValidation( )
 
 void testInputValidation()
 {
-	const float testValue = 0;
-	string expires( "2016-10-01" );
-	unsigned cvvCode = 531;
-	CreditCard card( testValue, expires, cvvCode );
+	const float balance = 100;
+	string expires = string();
+	unsigned cvvCode = 111;
+	bool valid = false;
 
-	card.inputNumber();
+	CreditCard card( balance, expires, cvvCode );
+
+	cout<< "Input card:" << endl;
+	do
+	{
+		valid = card.inputNumber();
+		valid = card.inputExpirationDate();
+		valid = card.inputCvvCode();
+
+		if( !valid )
+			cout<< "Incorrect Input." <<endl;
+	} while( !valid );
 }
