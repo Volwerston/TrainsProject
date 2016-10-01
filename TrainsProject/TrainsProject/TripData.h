@@ -30,6 +30,7 @@ public:
 
 	void setDate(string);
 	void setDataOfBookedSeats(vector<RailCar>&);
+	void setDataOfChosenSeats(vector<unsigned>&);
 	void setDeparturePoint(string);
 	void setArrivalPoint(string);
 	void setTrain(Train);

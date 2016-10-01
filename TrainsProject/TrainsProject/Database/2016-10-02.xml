@@ -14,83 +14,38 @@
         <BookedSeat>1</BookedSeat>
         <BookedSeat>2</BookedSeat>
         <BookedSeat>3</BookedSeat>
-    </RailCar>
-    <RailCar>
-      <Number>2</Number>
-      <Type>K</Type>
-      <Seats>24</Seats>
-    </RailCar>
-    <RailCar>
-      <Number>3</Number>
-      <Type>K</Type>
-      <Seats>24</Seats>
-    </RailCar>
-    <RailCar>
-      <Number>4</Number>
-      <Type>K</Type>
-      <Seats>24</Seats>
-    </RailCar>
-    <RailCar>
-      <Number>5</Number>
-      <Type>K</Type>
-      <Seats>24</Seats>
-    </RailCar>
-    <Departure>
-      <Name>ivano-frankivsk</Name>
-      <Time>21:55</Time>
-    </Departure>
-    <Transition>
-      <Name>lviv</Name>
-      <Arrive>
-        <Time>00:30</Time>
-        <Date>2016-10-02</Date>
-      </Arrive>
-      <Leave>
-        <Time>00:50</Time>
-        <Date>2016-10-02</Date>
-      </Leave>
-    </Transition>
-    <Transition>
-      <Name>brody</Name>
-      <Arrive>
-        <Time>02:03</Time>
-        <Date>2016-10-02</Date>
-      </Arrive>
-      <Leave>
-        <Time>02:05</Time>
-        <Date>2016-10-02</Date>
-      </Leave>
-    </Transition>
-    <Arrival>
-      <Name>kyiv</Name>
-      <Time>8:50</Time>
-      <Date>2016-10-02</Date>
-    </Arrival>
-    <Route>
-      <From>ivano-frankivsk</From>
-      <To>kyiv</To>
-      <RailCar>
-        <Number>1</Number>
-        <Seat>1</Seat>
-        <Seat>2</Seat>
-        <Seat>3</Seat>
-        <Seat>4</Seat>
       </RailCar>
-      <RailCar>
-        <Number>3</Number>
-        <Seat>1</Seat>
-        <Seat>2</Seat>
-        <Seat>3</Seat>
-        <Seat>4</Seat>
+      <RailCar number="3"> 
+        <BookedSeat>3</BookedSeat>
+        <BookedSeat>7</BookedSeat>
+        <BookedSeat>12</BookedSeat>
       </RailCar>
     </Route>
-    <Route>
-      <From>lviv</From>
-      <To>brody</To>
-      <RailCar>
-        <Number>2</Number>
-        <Seat>5</Seat>
-      </RailCar>
-    </Route>
+  </Train>
+  <Train number="270">
+    <RailCar number="1" type="L"/>
+    <RailCar number="1" type="L"/>
+    <RailCar number="3" type="K"/>
+    <RailCar number="4" type="K"/>
+    <RailCar number="5" type="P"/>
+    <RailCar number="6" type="P"/>
+    <Departure name="odesa" leaveTime="10:00"/>
+    <Station name="kirovograd" arriveTime="13:37" leaveTime="13:40"/>
+    <Station name="kremenchuk" arriveTime="16:43" leaveTime="17:02"/>
+    <Station name="poltava" arriveTime="19:17" leaveTime="19:37"/>
+    <Arrival name="kharkiv" arriveTime="22:49"/>
+  </Train>
+  <Train number="601">
+    <RailCar number="1" type="P"/>
+    <RailCar number="2" type="P"/>
+    <RailCar number="3" type="P"/>
+    <RailCar number="4" type="P"/>
+    <RailCar number="5" type="P"/>
+    <RailCar number="6" type="P"/>
+    <Departure name="lviv" leaveTime="14:02"/>
+    <Station name="mykolaiv" arriveTime="14:46" leaveTime="14:47"/>
+    <Station name="stryi" arriveTime="15:11" leaveTime="15:21"/>
+    <Station name="drogobych" arriveTime="15:49" leaveTime="16:10"/>
+    <Arrival name="truskavets" arriveTime="16:30" />
   </Train>
 </Data>

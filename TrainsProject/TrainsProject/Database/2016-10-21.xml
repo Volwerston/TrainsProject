@@ -1,0 +1,81 @@
+<Data>
+    <Train number="720">
+        <RailCar number="1" type="L"/>
+        <RailCar number="2" type="L"/>
+        <RailCar number="3" type="K"/>
+        <RailCar number="4" type="P"/>
+        <RailCar number="5" type="L"/>
+        <RailCar number="6" type="P"/>
+        <RailCar number="7" type="K"/>
+        <RailCar number="8" type="P"/>
+        <RailCar number="9" type="K"/>
+        <RailCar number="10" type="P"/>
+        <Departure name="kovel" leaveTime="05:02"/>
+        <Station name="lutsk" arriveTime="06:56" leaveTime="07:26"/>
+        <Station name="rivne" arriveTime="08:47" leaveTime="08:51"/>
+        <Station name="dubno" arriveTime="09:58" leaveTime="10:00"/>
+        <Station name="brody" arriveTime="10:44" leaveTime="10:46"/>
+        <Arrival name="ternopil" arriveTime="13:02"/>
+    </Train>
+    <Train number="511">
+        <RailCar number="1" type="L"/>
+        <RailCar number="2" type="K"/>
+        <RailCar number="3" type="P"/>
+        <RailCar number="4" type="P"/>
+        <RailCar number="5" type="L"/>
+        <RailCar number="6" type="P"/>
+        <RailCar number="7" type="P"/>
+        <RailCar number="8" type="P"/>
+        <RailCar number="9" type="K"/>
+        <RailCar number="10" type="K"/>
+        <Departure name="uzhgorod" leaveTime="10:50"/>
+        <Station name="mukachevo" arriveTime="12:50" leaveTime="12:57"/>
+        <Station name="skole" arriveTime="15:41" leaveTime="15:43"/>
+        <Station name="stryi" arriveTime="16:14" leaveTime="16:16"/>
+        <Station name="khmelnytskyi" arriveTime="19:27" leaveTime="19:30"/>
+        <Station name="vinnytsia" arriveTime="21:15" leaveTime="21:34"/>
+        <Arrival name="kyiv" arriveTime="23:43"/>
+    </Train>
+    <Train number="234">
+        <RailCar number="1" type="L"/>
+        <RailCar number="2" type="L"/>
+        <RailCar number="3" type="L"/>
+        <RailCar number="4" type="K"/>
+        <RailCar number="5" type="K"/>
+        <RailCar number="6" type="K"/>
+        <RailCar number="7" type="P"/>
+        <RailCar number="8" type="P"/>
+        <Departure name="khmelnytskyi" leaveTime="00:06"/>
+        <Station name="vinnytsia" arriveTime="02:02" leaveTime="02:08"/>
+        <Station name="kyiv" arriveTime="06:03" leaveTime="06:28"/>
+        <Station name="lubny" arriveTime="07:27" leaveTime="07:29"/>
+        <Station name="myrgorod" arriveTime="08:22" leaveTime="08:24"/>
+        <Arrival name="poltava" arriveTime="09:54"/>
+    </Train>
+    <Train number="270">
+        <RailCar number="1" type="L"/>
+        <RailCar number="1" type="L"/>
+        <RailCar number="3" type="K"/>
+        <RailCar number="4" type="K"/>
+        <RailCar number="5" type="P"/>
+        <RailCar number="6" type="P"/>
+        <Departure name="odesa" leaveTime="10:00"/>
+        <Station name="kirovograd" arriveTime="13:37" leaveTime="13:40"/>
+        <Station name="kremenchuk" arriveTime="16:43" leaveTime="17:02"/>
+        <Station name="poltava" arriveTime="19:17" leaveTime="19:37"/>
+        <Arrival name="kharkiv" arriveTime="22:49"/>
+    </Train>
+    <Train number="601">
+        <RailCar number="1" type="P"/>
+        <RailCar number="2" type="P"/>
+        <RailCar number="3" type="P"/>
+        <RailCar number="4" type="P"/>
+        <RailCar number="5" type="P"/>
+        <RailCar number="6" type="P"/>
+        <Departure name="lviv" leaveTime="14:02"/>
+        <Station name="mykolaiv" arriveTime="14:46" leaveTime="14:47"/>
+        <Station name="stryi" arriveTime="15:11" leaveTime="15:21"/>
+        <Station name="drogobych" arriveTime="15:49" leaveTime="16:10"/>
+        <Arrival name="truskavets" arriveTime="16:30"/>
+    </Train>
+</Data>

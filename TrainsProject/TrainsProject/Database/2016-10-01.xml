@@ -2,7 +2,7 @@
   <Train number="43">
     <RailCar number="1" type="L"/>
     <RailCar number="2" type="K"/>
-    <RailCar number="3" type="P"/>
+    <RailCar number="3" type="P"/> 
     <RailCar number="4" type="P"/>
     <RailCar number="5" type="P"/>
     <Departure name="ivano-frankivsk" leaveTime="13:55"/>

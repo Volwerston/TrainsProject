@@ -12,8 +12,8 @@ const int fontWidth = 11;
 const int fontHeight = 18;
 
 Printer headline(Color::YELLOW, Color::BLUE);
-Printer menuPassive(Color::YELLOW, Color::BROWN);
-Printer menuActive(Color::YELLOW, Color::RED);
+Printer menuPassive(Color::YELLOW, Color::CYAN);
+Printer menuActive(Color::YELLOW, Color::GREEN);
 Printer techData(Color::BLACK, Color::WHITE);
 Printer stats(Color::WHITE, Color::LIGHT_BLUE);
 

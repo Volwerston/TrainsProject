@@ -65,7 +65,18 @@ bool CreditCard::inputNumber()
 {
 	cout<< "Please input credit card number:" <<endl;
 	cin>> mNumber;
+<<<<<<< HEAD
 	return( valid( *this ) );
+=======
+	while( !valid( *this ) )
+	{
+		cout<< "Incorrect number. Please try again." <<endl;
+		mNumber.clear();
+		cin>> mNumber;
+	}
+
+	return true;
+>>>>>>> c9c3d81c9df699a232a3a2f296408af92b287c46
 }
 	
 bool CreditCard::inputExpirationDate()
