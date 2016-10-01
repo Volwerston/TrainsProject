@@ -3,6 +3,4 @@
 class TrainsView: public View
 {
 	TrainsView();
-
-
 };
