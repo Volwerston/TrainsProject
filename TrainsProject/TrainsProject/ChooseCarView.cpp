@@ -171,7 +171,7 @@ View* ChooseCarView::handle()
 		case 224: // one of the arrows
 			switch (_getch())
 			{
-			case 72: // menu up
+			case UP: // menu up
 				prevItem = currItem;
 
 				if (currItem == 0)
@@ -188,7 +188,7 @@ View* ChooseCarView::handle()
 				setCursorAt(0, 3 + 2*currItem);
 				printAtCenter(chooseOptions[currItem], menuActive);
 				break;
-			case 80: // menu down
+			case DOWN: 
 				prevItem = currItem;
 
 				if (currItem == chooseOptions.size() - 1)

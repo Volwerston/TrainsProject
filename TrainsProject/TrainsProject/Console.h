@@ -42,3 +42,5 @@ extern const int fontHeight;
 #define UP 72
 #define DOWN 80
 #define ASCII_ZERO 48
+#define LEFT 75
+#define RIGHT 77
