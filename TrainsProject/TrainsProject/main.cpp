@@ -16,7 +16,7 @@ int main()
 
 	//setConsoleSize(123, 39);
 
-	//TripData tripData("2016-10-01", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
+	TripData tripData("2016-10-01", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
 
 	/*
 	View* carView = new ChooseCarView(tripData);
@@ -27,9 +27,9 @@ int main()
 	*/
 
 	//saveTrainsByDate(trains, "2016-10-03");
-	TripData tripData = TripData();
+	//TripData tripData = TripData();
 	//View *view = new ChooseCarView(tripData);
-	View *view = new StartView(tripData);
+	View *view = new ChooseCarView(tripData);
 	while (view != nullptr)
 	{
 		view->draw();

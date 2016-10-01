@@ -516,7 +516,7 @@ View* StartView::handle()
 			}
 		}
 		break;
-		}s
+		}
 		if (selectedItem == &vectorOfItems[0])
 		{
 			key = correctDate(key);

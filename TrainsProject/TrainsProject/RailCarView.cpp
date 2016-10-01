@@ -343,18 +343,27 @@ View* RailCarView::handle()
 					if (selected == vectorOfBookedSeats[i])
 					{
 						isBooked = true;
+						break;
 					}
 				}
 			}
+
 			if (isBooked == true)
 			{
-				//for (auto it = vectorOfBookedSeats.begin(); it != vectorOfBookedSeats.end(); it++)
-				//{
-				//	if (selected == *it)
-				//	{
-				//		vectorOfBookedSeats.erase(it);
-				//	}
-				//}
+				auto it = vectorOfBookedSeats.begin();
+
+				while (it != vectorOfBookedSeats.end())
+				{
+					if (selected == *it)
+					{
+						it = vectorOfBookedSeats.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+
 				brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 				drawSeat(selected);
 			}
@@ -387,6 +396,7 @@ View* RailCarView::handle()
 		}
 	}
 	
+	/*
 	SelectObject(hdc, penForRailCarSeats1);
 	SelectObject(hdc, penForRailCarSeatsBold1);
 	SelectObject(hdc, brushForRailCarSeat1);
@@ -398,6 +408,7 @@ View* RailCarView::handle()
 	DeleteObject(brushForRailCarSeat2);
 	DeleteObject(brushForRailCarSeatSelected2);
 	DeleteObject(brushForRailCarSeatSold2);
+	*/
 
 	return nextView;
 }

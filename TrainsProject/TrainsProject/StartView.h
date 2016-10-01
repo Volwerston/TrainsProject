@@ -2,15 +2,6 @@
 #include "View.h"
 #include "Printer.h"
 
-#define ENTER_KEY 13
-#define SPACEBAR 32
-#define BACK_SPACE 8
-#define ESC 27
-#define ARROW_KEY 224
-#define UP 72
-#define DOWN 80
-#define ASCII_ZERO 48
-
 enum class Items
 {
 	Date,
