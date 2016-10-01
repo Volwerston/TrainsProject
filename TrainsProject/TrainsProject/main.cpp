@@ -3,10 +3,11 @@
 
 #include "Train.h"
 #include "Algorithms.h"
-#include "TripData.h"
+//#include "TripData.h"
 #include "ChooseCarView.h"
 #include "RailCarView.h"
-#include "Console.h"
+//#include "Console.h"
+#include "StartView.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ int main()
 
 	//setConsoleSize(123, 39);
 
-	TripData tripData("2016-10-01", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
+	//TripData tripData("2016-10-01", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
 
 	/*
 	View* carView = new ChooseCarView(tripData);
@@ -28,8 +29,9 @@ int main()
 	*/
 
 	//saveTrainsByDate(trains, "2016-10-03");
-
-	View *view = new ChooseCarView(tripData);
+	TripData tripData = TripData();
+	//View *view = new ChooseCarView(tripData);
+	View *view = new StartView(tripData);
 	while (view != nullptr)
 	{
 		view->draw();
