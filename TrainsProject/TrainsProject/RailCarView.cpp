@@ -390,6 +390,7 @@ View* RailCarView::handle()
 			drawSold(vectorOfOrderedSeats, selected);
 			break;
 		case ESC:
+			nextView = new ChooseCarView(tripData);
 			chosen = true;
 			break;
 		case ENTER_KEY:
