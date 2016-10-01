@@ -1,7 +1,11 @@
 
 #include "CreditCard.h"
+#include "Func.h"
+#include <iostream>
 
 using namespace std;
+
+const unsigned CreditCard::sSize = 16;
 
 double CreditCard::balance()const
 {
@@ -18,7 +22,42 @@ const CreditCard& CreditCard::operator+=( const CreditCard& rhs )
 	return *this;
 }
 
-string CreditCard::number() const
+const char* CreditCard::number()const
 {
-	return mNumber;
+	return mNumber.c_str();
 }
+
+bool CreditCard::charge( double amount )	// return true if success and false otherwise
+{
+	if( mBalance >= amount )
+	{
+		mBalance -= amount;
+		return true;
+	}
+	else
+		return false;
+}
+
+bool CreditCard::addFunds( double amount )	// return true if success and false otherwise
+{
+	if( amount > 0 )
+	{
+		mBalance += amount;
+		return true;
+	}
+	else
+		return false;
+}	
+
+bool CreditCard::inputNumber()
+{
+	cout<< "Please input credit card number:" <<endl;
+	cin>> mNumber;
+	while( !valid( *this ) )
+	{
+		cout<< "Incorrect number. Please try again." <<endl;
+		mNumber.clear();
+		cin>> mNumber;
+	}
+}
+	

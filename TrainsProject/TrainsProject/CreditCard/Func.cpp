@@ -2,8 +2,8 @@
 
 bool valid( const CreditCard& card )	// return true if valid card and false otherwise	
 {
-	const char* number = card.number().c_str();
-	int digit = card.number().size() - 1;
+	const char* number = card.number();
+	int digit = card.sSize - 1;
 	unsigned mult = 0, sumOdd = 0, sumEven = 0;
 
 	while( digit >= 0 )
@@ -25,3 +25,4 @@ bool valid( const CreditCard& card )	// return true if valid card and false othe
 
 	return ! (( sumOdd + sumEven ) % 10);	// if mod 10 == zero card is valid
 }
+
