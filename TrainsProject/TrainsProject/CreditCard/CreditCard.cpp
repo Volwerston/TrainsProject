@@ -12,7 +12,8 @@ double CreditCard::balance()const
 	return mBalance;
 }
 
-CreditCard::CreditCard( double balance, const string& number ) : mBalance( balance ), mNumber( number ) 	
+CreditCard::CreditCard( double balance, const string& expires, unsigned cvvCode , const string& number )
+		: mNumber( number ), mExpires( expires ), mCvvCode( cvvCode ), mBalance( balance )	
 {
 	;
 }
