@@ -188,6 +188,7 @@ View* RailCarView::handle()
 	vector<unsigned> vectorOfOrderedSeats = tripData.getVectorOfSeats();
 	drawSelected(selected);
 	drawSold(vectorOfBookedSeats, selected);
+	drawSold(vectorOfOrderedSeats, selected);
 	bool isBooked = false;
 	while (!chosen)
 	{
