@@ -25,5 +25,5 @@ void View::drawBackground(int left, int top, int width, int height, COLORREF bac
 void View::clean()
 {
 	system("cls");
-	drawBackground(0, 0, consoleWidth*fontWidth, consoleHeight*fontHeight, RGB(22, 160, 133));
+	drawBackground(0, 0, consoleWidth*fontWidth, consoleHeight*fontHeight, RGB(0, 128, 128));
 }
