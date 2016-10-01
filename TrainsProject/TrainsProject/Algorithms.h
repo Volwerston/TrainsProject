@@ -2,7 +2,7 @@
 #include "Train.h"
 #include "TripData.h"
 
-vector<Train> getTrainsByDate(const string&);
+vector<Train> getTrainsByDate(const string&, TripData&);
 
 vector<Train> getSuitableTrains(const vector<Train>&);
 

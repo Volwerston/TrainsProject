@@ -1,7 +1,10 @@
 #pragma once
 #include <sstream>
 #include <string>
+#include <vector>
+
 #include "Printer.h"
+#include "Train.h"
 
 using namespace std;
 
@@ -33,6 +36,8 @@ extern const int consoleWidth;
 extern const int consoleHeight;
 extern const int fontWidth;
 extern const int fontHeight;
+
+extern vector<Train> trainsToSave;
 
 #define ENTER_KEY 13
 #define SPACEBAR 32

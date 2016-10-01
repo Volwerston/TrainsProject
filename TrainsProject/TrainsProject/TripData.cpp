@@ -49,6 +49,11 @@ unsigned TripData::getNumberOfRailCar() const
 	return numberOfRailCar;
 }
 
+vector<Train> TripData::getTrains() const
+{
+	return trainsToSave;
+}
+
 vector<unsigned> TripData::getVectorOfSeats() const
 {
 	return vectorOfSeats;
@@ -67,6 +72,11 @@ void TripData::setDate(string _date)
 void TripData::setDeparturePoint(string _departure)
 {
 	departurePoint = _departure;
+}
+
+void TripData::setTrains(vector<Train>& vec)
+{
+	trainsToSave = vec;
 }
 
 void TripData::setArrivalPoint(string _arrival)

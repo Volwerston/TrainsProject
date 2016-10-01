@@ -14,6 +14,7 @@ class TripData
 	unsigned numberOfTrain;
 	unsigned numberOfRailCar;
 	vector<unsigned> vectorOfSeats;
+	vector<Train> trainsToSave;
 	Train chosenTrain;
 
 public:
@@ -27,6 +28,7 @@ public:
 	unsigned getNumberOfRailCar() const;
 	vector<unsigned> getVectorOfSeats() const;
 	Train getTrain() const;
+	vector<Train> getTrains() const;
 
 	void setDate(string);
 	void setDataOfBookedSeats(vector<RailCar>&);
@@ -37,4 +39,5 @@ public:
 	void setNumberOfTrain(unsigned);
 	void setNumberOfRailcar(unsigned);
 	void pushToVectorOfSeats(unsigned);
+	void setTrains(vector<Train>&);
 };

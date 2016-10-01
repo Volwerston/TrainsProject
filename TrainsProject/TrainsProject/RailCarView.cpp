@@ -1,4 +1,6 @@
 #include "RailCarView.h"
+#include "CreditCardView.h"
+
 #include <iterator>
 #include <algorithm>
 
@@ -396,7 +398,7 @@ View* RailCarView::handle()
 			break;
 		case ENTER_KEY:
 			tripData.setDataOfChosenSeats(vectorOfOrderedSeats);
-			nextView = new ChooseCarView(tripData);
+			nextView = new CreditCardView(tripData);
 			chosen = true;
 			break;
 		}

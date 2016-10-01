@@ -17,6 +17,8 @@ Printer menuActive(Color::YELLOW, Color::GREEN);
 Printer techData(Color::BLACK, Color::WHITE);
 Printer stats(Color::WHITE, Color::LIGHT_BLUE);
 
+vector<Train> trains;
+
 void scrollOff(int width, int height)
 {
 	string cols = to_string(width);

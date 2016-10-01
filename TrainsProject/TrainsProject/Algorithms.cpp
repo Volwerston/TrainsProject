@@ -11,7 +11,6 @@ using namespace tinyxml2;
 using namespace std;
 
 
-
 RailCar readRailCar(XMLElement* railCar)
 {
 
@@ -106,9 +105,11 @@ Route readRoute(XMLElement* route)
 	return toReturn;
 }
 
-vector<Train> getTrainsByDate(const string& date)
+vector<Train> getTrainsByDate(const string& date, TripData& tr)
 {
 	vector<Train> toReturn;
+
+	tr.setDate(date);
 
 	// loads data
 	string filePath = "Database/" + date + ".xml";
@@ -195,6 +196,8 @@ vector<Train> getTrainsByDate(const string& date)
 			train = train->NextSiblingElement("Train");
 		}
 	}
+
+	tr.setTrains(toReturn);
 
 	return toReturn;
 }

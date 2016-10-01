@@ -21,11 +21,14 @@ using namespace std;
 int main()
 {
 	setConsoleProperties();
-	vector<Train> trains = getTrainsByDate("2016-10-03");
+
+	TripData tripData("2016-10-05", "kovel", "brody", 0, 0, vector<unsigned int>(), Train());
+
+	vector<Train> trains = getTrainsByDate("2016-10-05", tripData);
+
+	tripData.setTrain(trains[4]);
 
 	//setConsoleSize(123, 39);
-
-	TripData tripData("2016-10-03", "ivano-frankivsk", "brody", 0, 0, vector<unsigned int>(), trains[0]);
 
 	/*
 	View* carView = new ChooseCarView(tripData);
