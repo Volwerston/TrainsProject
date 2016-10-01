@@ -3,10 +3,8 @@
 
 #include "Train.h"
 #include "Algorithms.h"
-//#include "TripData.h"
 #include "ChooseCarView.h"
 #include "RailCarView.h"
-//#include "Console.h"
 #include "StartView.h"
 
 using namespace std;
