@@ -189,10 +189,6 @@ int StartView::UPorDOWNorENTER(unsigned& key)
 
 int StartView::writingWord(string& word, unsigned size, unsigned& key)
 {
-	if (UPorDOWNorENTER(key))
-	{
-		return UPorDOWNorENTER(key);
-	}
 	unsigned start = word.size();
 	backSpace(start,key,word);
 	for (unsigned i = start; i < size; ++i)
