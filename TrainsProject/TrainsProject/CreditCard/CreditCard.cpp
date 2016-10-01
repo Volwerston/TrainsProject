@@ -59,5 +59,7 @@ bool CreditCard::inputNumber()
 		mNumber.clear();
 		cin>> mNumber;
 	}
+
+	return true;
 }
 	
