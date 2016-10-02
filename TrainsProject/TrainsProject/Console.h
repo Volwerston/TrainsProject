@@ -2,9 +2,11 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <wchar.h>
 
 #include "Printer.h"
 #include "Train.h"
+#include "View.h"
 
 using namespace std;
 
@@ -19,6 +21,15 @@ void scrollOff(int width, int height);
 void setConsoleSize(int width, int height);
 
 BOOL DrawLine(HDC, int, int, int, int);
+
+int correctDate(unsigned&, string&, const string&, View*);
+bool backSpace(unsigned&, unsigned&, string&, View*);
+bool dateValidation(unsigned&, unsigned&, string&);
+int UPorDOWNorENTER(unsigned&);
+string getCurrentDate();
+
+int writingWord(string&, unsigned, unsigned&, View*);
+int writingNumber(string&, unsigned, unsigned&, View*);
 
 extern HWND hwnd;
 extern HANDLE hconsole;

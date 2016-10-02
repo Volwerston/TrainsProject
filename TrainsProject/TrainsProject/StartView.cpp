@@ -8,8 +8,8 @@
 #include "TrainsView.h"
 
 StartView::StartView(TripData _tripData):
-	mainPrinter(Color::BLUE, Color::BLACK),
-	printerForSelectedItem(Color::RED,Color::BLACK),
+	mainPrinter(Color::WHITE, Color::CYAN),
+	printerForSelectedItem(Color::RED,Color::CYAN),
 	tripData(_tripData),
 	indexOfSelectedItem(0),
 	date("")
@@ -75,280 +75,9 @@ string StartView::itemToString(Items item)
 	return toReturn;
 }
 
-bool StartView::dateValidation(unsigned& index, unsigned& key)
-{
-	if (index == 4 && key - ASCII_ZERO < 2)
-	{
-		return true;
-	}
-	else if (index == 5)
-	{
-		if (date[4] == '0')
-		{
-			if (key != ASCII_ZERO)
-			{
-				return true;
-			}
-			else
-			{
-				--index;
-				return false;
-			}
-		}
-		else if (key - ASCII_ZERO < 3)
-		{
-			return true;
-		}
-		else
-		{
-			--index;
-			return false;
-		}
-	}
-	else if (index == 6 && key-ASCII_ZERO < 4)
-	{
-		return true;
-	}
-	else if (index == 7)
-	{
-		if (date[6] == '3' && key - ASCII_ZERO < 2)
-		{
-			return true;
-		}
-		else if (date[6] == '0')
-		{
-			if (key != ASCII_ZERO)
-			{
-				return true;
-			}
-			else
-			{
-				--index;
-				return false;
-			}
-		}
-		else if(date[6] == '1' || date[6] == 2)
-		{
-			return true;
-		}
-		else
-		{
-			--index;
-			return false;
-		}
-	}
-	else if (index >= 0 && index < 4 && key- ASCII_ZERO < 10)
-	{
-		return true;
-	}
-	else
-	{
-		--index;
-		return false;
-	}
-}
-
-bool StartView::backSpace(unsigned& index, unsigned& key , string& str)
-{
-	bool toReturn = false;
-	while (key == BACK_SPACE && index >= 0)
-	{
-		toReturn = true;
-		if (index != 0)
-		{
-			--index;
-		}
-		if (str.size() != 0)
-		{
-			str.pop_back();
-		}
-		draw();
-		key = _getch();
-		
-	}
-	return toReturn;
-}
-
-int StartView::UPorDOWNorENTER(unsigned& key)
-{
-	if(key == UP)
-	{
-		return UP;
-	}
-	else if (key == DOWN)
-	{
-		return DOWN;
-	}
-	else if (key == ENTER_KEY)
-	{
-		return ENTER_KEY;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-int StartView::writingWord(string& word, unsigned size, unsigned& key)
-{
-	unsigned start = word.size();
-	backSpace(start,key,word);
-	for (unsigned i = start; i < size; ++i)
-	{
-		if ((char)key >= 'a' && (char)key <= 'z' || (char)key == '-')
-		{
-			word.push_back(key);
-			draw();
-		}
-		key = _getch(); 
-		backSpace(i, key, word);
-		if (UPorDOWNorENTER(key))
-		{
-			return UPorDOWNorENTER(key);
-		}
-	}
-	while (key)
-	{
-		unsigned i = size - 1;
-		if (backSpace(i, key, word))
-		{
-			backSpace(i, key, word);
-			writingWord(word, size,key);
-		}
-		key = _getch();
-		backSpace(i, key, word);
-		if (UPorDOWNorENTER(key))
-		{
-			return UPorDOWNorENTER(key);
-		}
-	}
-
-}
-int  StartView::writingNumberOfTrain(unsigned& key)
-{
-	if (UPorDOWNorENTER(key))
-	{
-		return UPorDOWNorENTER(key);
-	}
-	unsigned start = trainNumber.size();
-	backSpace(start, key, trainNumber);
-	for (unsigned i = start; i < 3; ++i)
-	{
-		if ((char)key >= '1' && (char)key <= '9')
-		{
-			trainNumber.push_back(key);
-			draw();
-		}
-		key = _getch();
-		backSpace(i, key, trainNumber);
-		if (UPorDOWNorENTER(key))
-		{
-			return UPorDOWNorENTER(key);
-		}
-	}
-	while (key)
-	{
-		unsigned i = 3 - 1;
-		if (backSpace(i, key, trainNumber))
-		{
-			backSpace(i, key, trainNumber);
-			writingWord(trainNumber, 3, key);
-		}
-		key = _getch();
-		backSpace(i, key, trainNumber);
-		if (UPorDOWNorENTER(key))
-		{
-			return UPorDOWNorENTER(key);
-		}
-	}
-
-}
-
-int StartView::correctDate(unsigned& key)
-{
-	if (UPorDOWNorENTER(key))
-	{
-		return UPorDOWNorENTER(key);
-	}
-	unsigned start = date.size();
-	backSpace(start, key, date);
-	if (key - ASCII_ZERO < 10)
-	{
-		for (unsigned i = start; i < 8; ++i)
-		{
-			if (key > currentDate[i])
-			{
-				if (dateValidation(i, key))
-				{
-					for (unsigned j = i; j < 8; ++j)
-					{
-						if (dateValidation(j, key))
-						{
-							date.push_back(key);
-							draw();
-						}
-						key = _getch();
-						if (UPorDOWNorENTER(key))
-						{
-							return UPorDOWNorENTER(key);
-						}
-						backSpace(j, key, date);
-					}
-					break;
-				}
-				key = _getch();
-				if (UPorDOWNorENTER(key))
-				{
-					return UPorDOWNorENTER(key);
-				}
-				backSpace(i, key,date);
-			}
-			else if (key == currentDate[i])
-			{
-				if (dateValidation(i, key))
-				{
-					date.push_back(key);
-					draw();
-				}
-					key = _getch();
-					if (UPorDOWNorENTER(key))
-					{
-						return UPorDOWNorENTER(key);
-					}
-					backSpace(i, key, date);
-			}
-			else
-			{
-				--i;
-				key = _getch();
-				if (UPorDOWNorENTER(key))
-				{
-					return UPorDOWNorENTER(key);
-				}
-				backSpace(i, key, date);
-			}
-		}
-	}
-
-	while (key)
-	{
-		unsigned i = 7;
-		if (backSpace(i, key, date))
-		{
-			backSpace(i, key, date);
-			correctDate(key);
-		}
-		key = _getch();
-		if (UPorDOWNorENTER(key))
-		{
-			return UPorDOWNorENTER(key);
-		}
-	}
-}
-
 string StartView::representDate()
 {
-	string toReturn = date;;
+	string toReturn = date;
 	if (toReturn.size() == 5 || toReturn.size() == 6)
 	{
 		toReturn = toReturn.insert(4, "-");
@@ -359,6 +88,46 @@ string StartView::representDate()
 		toReturn = toReturn.insert(7, "-");
 	}
 	return toReturn;
+}
+
+int  StartView::writingNumberOfTrain(unsigned& key)
+{
+	if (UPorDOWNorENTER(key))
+	{
+		return UPorDOWNorENTER(key);
+	}
+	unsigned start = trainNumber.size();
+	backSpace(start, key, trainNumber, this);
+	for (unsigned i = start; i < 3; ++i)
+	{
+		if ((char)key >= '1' && (char)key <= '9')
+		{
+			trainNumber.push_back(key);
+			draw();
+		}
+		key = _getch();
+		backSpace(i, key, trainNumber, this);
+		if (UPorDOWNorENTER(key))
+		{
+			return UPorDOWNorENTER(key);
+		}
+	}
+	while (key)
+	{
+		unsigned i = 3 - 1;
+		if (backSpace(i, key, trainNumber, this))
+		{
+			backSpace(i, key, trainNumber, this);
+			writingWord(trainNumber, 3, key, this);
+		}
+		key = _getch();
+		backSpace(i, key, trainNumber, this);
+		if (UPorDOWNorENTER(key))
+		{
+			return UPorDOWNorENTER(key);
+		}
+	}
+
 }
 
 void StartView::drawItem(Items item, Printer& printer)
@@ -470,15 +239,13 @@ View* StartView::handle()
 			{
 				selectedItem = &vectorOfItems[vectorOfItems.size() - 1];
 				indexOfSelectedItem = vectorOfItems.size() - 1;
-				clean();
-				return this;
+				draw();
 			}
 			else
 			{
 				selectedItem = &vectorOfItems[indexOfSelectedItem - 1];
 				indexOfSelectedItem -= 1;
-				clean();
-				return this;
+				draw();
 			}
 			key = _getch();
 		}
@@ -489,15 +256,13 @@ View* StartView::handle()
 			{
 				selectedItem = &vectorOfItems[0];
 				indexOfSelectedItem = 0;
-				clean();
-				return this;
+				draw();
 			}
 			else
 			{
 				selectedItem = &vectorOfItems[indexOfSelectedItem + 1];
 				indexOfSelectedItem += 1;
-				clean();
-				return this;
+				draw();
 			}
 			key = _getch();
 		}
@@ -518,15 +283,15 @@ View* StartView::handle()
 		}
 		if (selectedItem == &vectorOfItems[0])
 		{
-			key = correctDate(key);
+			key = correctDate(key, date, currentDate, this);
 		}
 		else if (selectedItem == &vectorOfItems[1])
 		{
-			key = writingWord(departure, 20,key);
+			key = writingWord(departure, 20,key, this);
 		}
 		else if (selectedItem == &vectorOfItems[2])
 		{
-			key = writingWord(arrival, 20,key);
+			key = writingWord(arrival, 20,key, this);
 		}
 		else 
 		{

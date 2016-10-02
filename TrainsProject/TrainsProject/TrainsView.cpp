@@ -151,7 +151,7 @@ View* TrainsView::handle()
 
 			if (currItem == trains.size() - 1)
 			{
-				nextView = new StartView(tripData);
+				nextView = new StartView(TripData());
 			}
 			else
 			{

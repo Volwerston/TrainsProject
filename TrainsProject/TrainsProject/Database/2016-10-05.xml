@@ -41,25 +41,6 @@
         <Station name="drogobych" arriveTime="15:49" leaveTime="16:10"/>
         <Arrival name="truskavets" arriveTime="16:30"/>
     </Train>
-    <Train number="511">
-        <RailCar number="1" type="L"/>
-        <RailCar number="2" type="K"/>
-        <RailCar number="3" type="P"/>
-        <RailCar number="4" type="P"/>
-        <RailCar number="5" type="L"/>
-        <RailCar number="6" type="P"/>
-        <RailCar number="7" type="P"/>
-        <RailCar number="8" type="P"/>
-        <RailCar number="9" type="K"/>
-        <RailCar number="10" type="K"/>
-        <Departure name="uzhgorod" leaveTime="10:50"/>
-        <Station name="mukachevo" arriveTime="12:50" leaveTime="12:57"/>
-        <Station name="skole" arriveTime="15:41" leaveTime="15:43"/>
-        <Station name="stryi" arriveTime="16:14" leaveTime="16:16"/>
-        <Station name="khmelnytskyi" arriveTime="19:27" leaveTime="19:30"/>
-        <Station name="vinnytsia" arriveTime="21:15" leaveTime="21:34"/>
-        <Arrival name="kyiv" arriveTime="23:43"/>
-    </Train>
     <Train number="720">
         <RailCar number="1" type="L"/>
         <RailCar number="2" type="L"/>
@@ -97,6 +78,40 @@
                 <BookedSeat>1</BookedSeat>
                 <BookedSeat>10</BookedSeat>
                 <BookedSeat>19</BookedSeat>
+            </RailCar>
+        </Route>
+    </Train>
+    <Train number="511">
+        <RailCar number="1" type="L"/>
+        <RailCar number="2" type="K"/>
+        <RailCar number="3" type="P"/>
+        <RailCar number="4" type="P"/>
+        <RailCar number="5" type="L"/>
+        <RailCar number="6" type="P"/>
+        <RailCar number="7" type="P"/>
+        <RailCar number="8" type="P"/>
+        <RailCar number="9" type="K"/>
+        <RailCar number="10" type="K"/>
+        <Departure name="uzhgorod" leaveTime="10:50"/>
+        <Station name="mukachevo" arriveTime="12:50" leaveTime="12:57"/>
+        <Station name="skole" arriveTime="15:41" leaveTime="15:43"/>
+        <Station name="stryi" arriveTime="16:14" leaveTime="16:16"/>
+        <Station name="khmelnytskyi" arriveTime="19:27" leaveTime="19:30"/>
+        <Station name="vinnytsia" arriveTime="21:15" leaveTime="21:34"/>
+        <Arrival name="kyiv" arriveTime="23:43"/>
+        <Route startPoint="stryi" endPoint="vinnytsia">
+            <RailCar number="2">
+                <BookedSeat>1</BookedSeat>
+                <BookedSeat>2</BookedSeat>
+                <BookedSeat>3</BookedSeat>
+            </RailCar>
+            <RailCar number="1">
+                <BookedSeat>1</BookedSeat>
+            </RailCar>
+        </Route>
+        <Route startPoint="mukachevo" endPoint="khmelnytskyi">
+            <RailCar number="3">
+                <BookedSeat>1</BookedSeat>
             </RailCar>
         </Route>
     </Train>

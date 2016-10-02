@@ -31,19 +31,14 @@ public:
 	StartView(TripData);
 
 	string itemToString(Items);
-	int correctDate(unsigned&);
-	bool backSpace(unsigned&, unsigned&, string&);
-	bool dateValidation(unsigned&, unsigned&);
-	int UPorDOWNorENTER(unsigned&);
 	string representDate();
 	void drawItem(Items, Printer& );
-	int writingWord(string&, unsigned, unsigned&);
 	void drawItems();
 	void draw();
 	void drawName();
 	int writingNumberOfTrain(unsigned&);
-	void drawMessage();
 	bool enterWasPressed();
+	void drawMessage();
 	View* handle();
 };
 
