@@ -9,6 +9,7 @@
 #include "Route.h"
 #include "RailCarView.h"
 #include "RailCar.h"
+#include "TrainsView.h"
 
 template<typename T>
 string toString(const T& t)
@@ -59,7 +60,6 @@ void ChooseCarView::draw()
 {
 	View::clean();
 
-
 	setCursorAt(0, 1);
 	string mask = "#    Type         Price     Places    Free places    ";
 	printAtCenter(mask, headline);
@@ -71,6 +71,7 @@ void ChooseCarView::draw()
 
 	int numOfCars = railCars.size();
 
+	// vector of vector<bool>, where true = seat is booked; false = seat is free
 	trainSnippet.resize(railCars.size());
 
 	for (size_t i = 0; i < trainSnippet.size(); ++i)
@@ -168,7 +169,7 @@ View* ChooseCarView::handle()
 	{
 		switch (_getch())
 		{
-		case 224: // one of the arrows
+		case ARROW_KEY: // one of the arrows
 			switch (_getch())
 			{
 			case UP: // menu up
@@ -188,7 +189,7 @@ View* ChooseCarView::handle()
 				setCursorAt(0, 3 + 2*currItem);
 				printAtCenter(chooseOptions[currItem], menuActive);
 				break;
-			case DOWN: 
+			case DOWN:  // menu down
 				prevItem = currItem;
 
 				if (currItem == chooseOptions.size() - 1)
@@ -209,12 +210,12 @@ View* ChooseCarView::handle()
 			break;
 		case VK_RETURN: // Enter
 
-			if (currItem == chooseOptions.size() - 1)
+			if (currItem == chooseOptions.size() - 1) // Go back
 			{
-				toReturn = nullptr; // must be TrainView!
+				toReturn = new TrainsView(tripData); 
 				chosen = true;
 			}
-			else
+			else // Railcar was chosen
 			{
 
 				int numOfFreePlaces = std::count(trainSnippet[currItem].begin(), trainSnippet[currItem].end(), true);

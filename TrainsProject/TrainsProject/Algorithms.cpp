@@ -72,6 +72,8 @@ Route readRoute(XMLElement* route)
 
 	vector<RailCar> bookingData;
 
+	// read data of booked seats in each railcar
+
 	XMLElement* bookedCar = route->FirstChildElement("RailCar");
 
 	while (bookedCar != nullptr)
@@ -117,12 +119,15 @@ vector<Train> getTrainsByDate(const string& date, TripData& tr)
 	XMLDocument trainsData;
 	XMLError err = trainsData.LoadFile(filePath.c_str());
 
+	// file exists
 	if (err == XML_SUCCESS)
 	{
 		XMLNode* root = trainsData.FirstChild();
 
 		XMLElement* train = root->FirstChildElement("Train");
 
+
+		// read trains
 		while (train != nullptr)
 		{
 			Train aTrain;
@@ -134,6 +139,7 @@ vector<Train> getTrainsByDate(const string& date, TripData& tr)
 
 			XMLElement* railCar = train->FirstChildElement("RailCar");
 
+			// read railcars
 			while (railCar != nullptr)
 			{
 				RailCar toPush = readRailCar(railCar);
@@ -208,6 +214,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 	XMLNode* root = doc.NewElement("Data");
 
+	// save each train
 	for (size_t i = 0; i < vec.size(); ++i)
 	{
 		XMLElement* train = doc.NewElement("Train");
@@ -216,6 +223,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 		vector<RailCar> railCars = vec[i].getVectorOfRailCars();
 
+		// save data of railcars in each train
 		for (size_t j = 0; j < railCars.size(); ++j)
 		{
 			XMLElement* railCar = doc.NewElement("RailCar");
@@ -238,6 +246,8 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 			train->InsertEndChild(railCar);
 		}
 
+
+		// save data about first station
 		vector<Station> stations = vec[i].getVectorOfStations();
 
 		XMLElement* departure = doc.NewElement("Departure");
@@ -246,6 +256,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 		train->InsertEndChild(departure);
 
+		// save data about transitional stations
 		for (size_t j = 1; j < stations.size() - 1; ++j)
 		{
 			XMLElement* station = doc.NewElement("Station");
@@ -256,6 +267,8 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 			train->InsertEndChild(station);
 		}
 
+
+		// save data about the last station
 		XMLElement* arrival = doc.NewElement("Arrival");
 		arrival->SetAttribute("name", stations[stations.size() - 1].getName().c_str());
 		arrival->SetAttribute("arriveTime", stations[stations.size() - 1].getTimeOfArrival().c_str());
@@ -264,16 +277,17 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 		vector<Route> routes = vec[i].getVectorOfRoutes();
 
+		// save data about routes that users booked tickets for
 		for (size_t j = 0; j < routes.size(); ++j)
 		{
 			XMLElement* route = doc.NewElement("Route");
-			//
 
 			route->SetAttribute("startPoint", routes[j].getDepartureStation().c_str());
 			route->SetAttribute("endPoint", routes[j].getArrivalStation().c_str());
 
 			vector<RailCar> bookingData = routes[j].getBookingData();
 
+			// save data of railcars in which users booked seats
 			for (int k = 0; k < bookingData.size(); ++k)
 			{
 				XMLElement* railCar = doc.NewElement("RailCar");
@@ -282,6 +296,7 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 
 				vector<unsigned> seats = bookingData[k].getVectotOfBookedSeats();
 
+				// save booked seats
 				for (int l = 0; l < seats.size(); ++l)
 				{
 					XMLElement* bookedSeat = doc.NewElement("BookedSeat");
