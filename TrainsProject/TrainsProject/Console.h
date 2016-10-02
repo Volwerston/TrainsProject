@@ -51,8 +51,6 @@ extern const int consoleHeight;
 extern const int fontWidth;
 extern const int fontHeight;
 
-extern vector<Train> trainsToSave;
-
 #define ENTER_KEY 13
 #define SPACEBAR 32
 #define BACK_SPACE 8

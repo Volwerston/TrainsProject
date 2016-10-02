@@ -9,6 +9,8 @@ class ChooseCarView : public View
 	TripData tripData;
 	vector<vector<bool> > trainSnippet;
 	vector<string> chooseOptions;
+
+	void printOptions(int);
 public:
 	ChooseCarView(const TripData& t = TripData());
 
