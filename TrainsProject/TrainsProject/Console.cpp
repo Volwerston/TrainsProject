@@ -19,6 +19,8 @@ Printer menuActive(Color::YELLOW, Color::GREEN);
 Printer techData(Color::BLACK, Color::WHITE);
 Printer stats(Color::WHITE, Color::LIGHT_BLUE);
 Printer printerForRailCarViewEnterButton(Color::WHITE, Color::CYAN);
+Printer mainPrinter(Color::WHITE, Color::CYAN);
+Printer printerForSelectedItem(Color::RED, Color::CYAN);
 
 vector<Train> trains;
 

@@ -81,9 +81,7 @@ CreditCardView::CreditCardView(TripData data) :
 	indexOfSelectedOption(0),
 	dateOfExpiration(""),
 	CVV(""),
-	cardNumber(""),
-	mainPrinter(Color::WHITE, Color::CYAN),
-	printerForSelectedItem(Color::RED, Color::CYAN)
+	cardNumber("")
 {
 	countPrice();
 	vectorOfOptions.push_back(Item::CardNumber);
@@ -93,6 +91,7 @@ CreditCardView::CreditCardView(TripData data) :
 	vectorOfOptions.push_back(Item::GoBack);
 	selectedOption = &vectorOfOptions[0];
 
+	// get local time
 	SYSTEMTIME time;
 	GetLocalTime(&time);
 
@@ -123,7 +122,7 @@ CreditCardView::CreditCardView(TripData data) :
 	currentDate = currentYear + currentMonth + currentDay;
 }
 
-void CreditCardView::countPrice()
+void CreditCardView::countPrice() // find the price of purchase
 {
 	int koef = 0;
 
@@ -221,8 +220,7 @@ void CreditCardView::draw()
 	drawVectorOfOptions();
 }
 
-
-bool CreditCardView::enterWasPressed()
+bool CreditCardView::enterWasPressed() // checks whether all fields have proper data before submitting
 {
 	bool toReturn = false;
 	if (creditCardValid(cardNumber) && dateOfExpiration.size() == 8 && CVV.size() == 3)
@@ -231,6 +229,117 @@ bool CreditCardView::enterWasPressed()
 	}
 
 	return toReturn;
+}
+
+void CreditCardView::payForTickets()
+{
+	vector<Route> routes = tripData.getTrain().getVectorOfRoutes();
+
+	// makes new route
+	Route toAdd;
+	toAdd.setDepartureStation(tripData.getDeparturePoint());
+	toAdd.setArrivalStation(tripData.getArrivalPoint());
+
+	bool routeFound = false;
+	vector<unsigned> seats = tripData.getVectorOfSeats();
+
+	vector<RailCar> railCars;
+
+	for (int i = 0; i < routes.size(); ++i)
+	{
+		// there is such route in the list of routes
+		if (routes[i].getArrivalStation() == toAdd.getArrivalStation()
+			&& routes[i].getDepartureStation() == toAdd.getDepartureStation())
+		{
+			routeFound = true;
+
+			railCars = routes[i].getBookingData();
+
+			bool railCarFound = false;
+
+			for (int j = 0; j < railCars.size(); ++j)
+			{
+				// some tickets in this car for this route have already been booked
+				if (railCars[j].getNumber() == tripData.getNumberOfRailCar())
+				{
+					railCarFound = true;
+
+					// just add new seats to the vector of booked seats
+					for (int k = 0; k < seats.size(); ++k)
+					{
+						railCars[j].pushSeatToVectorOfBookedSeats(seats[k] + 1);
+					}
+
+					break;
+				}
+			}
+
+			// if no tickets have been booked for this railcar in the existing route
+			if (!railCarFound)
+			{
+				// make new railcar, fill booked seats and add this railcar to the existing route
+				RailCar newRailCar;
+				newRailCar.setNumber(tripData.getNumberOfRailCar());
+				for (int j = 0; j < seats.size(); ++j)
+				{
+					newRailCar.pushSeatToVectorOfBookedSeats(seats[j] + 1);
+				}
+				railCars.push_back(newRailCar);
+			}
+
+			routes[i].setBookingData(railCars);
+			break;
+		}
+	}
+
+	// if route doesn't exist
+	if (!routeFound)
+	{
+		vector<RailCar> cars;
+
+		RailCar aRailCar;
+		aRailCar.setNumber(tripData.getNumberOfRailCar());
+		for (int i = 0; i < seats.size(); ++i)
+		{
+			aRailCar.pushSeatToVectorOfBookedSeats(seats[i] + 1);
+		}
+
+		cars.push_back(aRailCar);
+
+		// push already created "toAdd" route to the vector of routes
+		toAdd.setBookingData(cars);
+		routes.push_back(toAdd);
+	}
+
+	Train aTrain = tripData.getTrain();
+
+	// creates a modified train to replace the existing one
+	Train modifyTrain(aTrain.getName(), aTrain.getNumber(), aTrain.getVectorOfRailCars(), aTrain.getVectorOfStations(), routes);
+
+	vector<Train> trainsToSave = tripData.getTrains();
+
+
+	// delete existing train and replace with the new one
+	auto it = trainsToSave.begin();
+
+	while (it != trainsToSave.end())
+	{
+		if ((*it).getNumber() == aTrain.getNumber())
+		{
+			it = trainsToSave.erase(it);
+			break;
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	trainsToSave.push_back(modifyTrain);
+
+
+	// save trains to file
+	saveTrainsByDate(trainsToSave, tripData.getDate());
 }
 
 View* CreditCardView::handle()
@@ -250,7 +359,7 @@ View* CreditCardView::handle()
 		{
 		case(UP) :
 		{
-			if (selectedOption == &vectorOfOptions[0])
+			if (selectedOption == &vectorOfOptions[0]) // go to the last option
 			{
 				selectedOption = &vectorOfOptions[vectorOfOptions.size() - 1];
 				indexOfSelectedOption = vectorOfOptions.size() - 1;
@@ -267,13 +376,13 @@ View* CreditCardView::handle()
 				 break;
 		case(DOWN) :
 		{
-			if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 1])
+			if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 1]) // go to the first option
 			{
 				selectedOption = &vectorOfOptions[0];
 				indexOfSelectedOption = 0;
 				draw();
 			}
-			else
+			else 
 			{
 				selectedOption = &vectorOfOptions[indexOfSelectedOption + 1];
 				indexOfSelectedOption += 1;
@@ -283,108 +392,17 @@ View* CreditCardView::handle()
 		}
 				   break;
 		case ESC:
-			toReturn = new RailCarView(tripData);
+			toReturn = new RailCarView(tripData); // go to the previous view
 			finish = true;
 			break;
 		case(ENTER_KEY) :
 		{
-			if (enterWasPressed())
+			if (enterWasPressed()) // can be paid
 			{
-				if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 2])
+				if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 2]) // "Pay"
 				{
-					vector<Route> routes = tripData.getTrain().getVectorOfRoutes();
-
-					Route toAdd;
-					toAdd.setDepartureStation(tripData.getDeparturePoint());
-					toAdd.setArrivalStation(tripData.getArrivalPoint());
-
-					bool routeFound = false;
-					vector<unsigned> seats = tripData.getVectorOfSeats();
-
-					vector<RailCar> railCars;
-
-					for (int i = 0; i < routes.size(); ++i)
-					{
-						if (routes[i].getArrivalStation() == toAdd.getArrivalStation()
-							&& routes[i].getDepartureStation() == toAdd.getDepartureStation())
-						{
-							routeFound = true;
-
-							railCars = routes[i].getBookingData();
-
-							bool railCarFound = false;
-
-							for (int j = 0; j < railCars.size(); ++j)
-							{
-								if (railCars[j].getNumber() == tripData.getNumberOfRailCar())
-								{
-									railCarFound = true;
-									for (int k = 0; k < seats.size(); ++k)
-									{
-										railCars[j].pushSeatToVectorOfBookedSeats(seats[k] + 1);
-									}
-
-									break;
-								}
-							}
-
-							if (!railCarFound)
-							{
-								RailCar newRailCar;
-								newRailCar.setNumber(tripData.getNumberOfRailCar());
-								for (int j = 0; j < seats.size(); ++j)
-								{
-									newRailCar.pushSeatToVectorOfBookedSeats(seats[j] + 1);
-								}
-								railCars.push_back(newRailCar);
-							}
-
-							routes[i].setBookingData(railCars);
-							break;
-						}
-					}
-
-					if (!routeFound)
-					{
-						vector<RailCar> cars;
-
-						RailCar aRailCar;
-						aRailCar.setNumber(tripData.getNumberOfRailCar());
-						for (int i = 0; i < seats.size(); ++i)
-						{
-							aRailCar.pushSeatToVectorOfBookedSeats(seats[i] + 1);
-						}
-
-						cars.push_back(aRailCar);
-
-						toAdd.setBookingData(cars);
-						routes.push_back(toAdd);
-					}
-
-					Train aTrain = tripData.getTrain();
-
-					Train modifyTrain(aTrain.getName(), aTrain.getNumber(), aTrain.getVectorOfRailCars(), aTrain.getVectorOfStations(), routes);
-
-					vector<Train> trainsToSave = tripData.getTrains();
-
-					auto it = trainsToSave.begin();
-
-					while (it != trainsToSave.end())
-					{
-						if ((*it).getNumber() == aTrain.getNumber())
-						{
-							it = trainsToSave.erase(it);
-							break;
-						}
-						else
-						{
-							++it;
-						}
-					}
-
-					trainsToSave.push_back(modifyTrain);
-
-					saveTrainsByDate(trainsToSave, tripData.getDate());
+					// commit payment operation and go to start
+					payForTickets();
 
 					toReturn = new StartView(TripData());
 					finish = true;
@@ -392,14 +410,14 @@ View* CreditCardView::handle()
 			}
 
 
-			if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 1])
+			if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 1]) // "Go back"
 				{
 					toReturn = new RailCarView(tripData);
 					finish = true;
 				}
 			else
 				{
-					if (!enterWasPressed())
+					if (!enterWasPressed()) // if "Pay" but not all fields have proper data
 					{
 						key = _getch();
 					}
@@ -409,15 +427,15 @@ View* CreditCardView::handle()
 		}
 		if (selectedOption == &vectorOfOptions[0])
 		{
-			key = writingNumber(cardNumber, 16, key, this);
+			key = writingNumber(cardNumber, 16, key, this); // write card number
 		}
 		else if (selectedOption == &vectorOfOptions[1])
 		{
-			key = correctDate(key, dateOfExpiration, currentDate,  this);
+			key = correctDate(key, dateOfExpiration, currentDate,  this); // write day of expire
 		}
 		else if (selectedOption == &vectorOfOptions[2])
 		{
-			key = writingNumber(CVV, 3, key, this);
+			key = writingNumber(CVV, 3, key, this); // write CVV
 		}
 	}
 

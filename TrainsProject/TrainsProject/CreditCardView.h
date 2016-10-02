@@ -28,12 +28,12 @@ private:
 	vector<Item> vectorOfOptions; 
 	Item* selectedOption;
 	unsigned indexOfSelectedOption;
-	Printer mainPrinter;
-	Printer printerForSelectedItem;
 	string dateOfExpiration;
 	string currentDate;
 	string cardNumber;
 	string CVV;
+
+	void payForTickets();
 public:
 	CreditCardView( TripData );
 	void countPrice();
@@ -41,7 +41,6 @@ public:
 	bool enterWasPressed();
 	string representDate();
 	void drawOption(Item, Printer&);
-	bool backSpace(unsigned&, unsigned&, string&);
 	
 	void drawVectorOfOptions();
 	void draw();

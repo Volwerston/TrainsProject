@@ -128,5 +128,13 @@
                 <BookedSeat>2</BookedSeat>
             </RailCar>
         </Route>
+        <Route startPoint="uzhgorod" endPoint="khmelnytskyi">
+            <RailCar number="6">
+                <BookedSeat>1</BookedSeat>
+                <BookedSeat>9</BookedSeat>
+                <BookedSeat>10</BookedSeat>
+                <BookedSeat>2</BookedSeat>
+            </RailCar>
+        </Route>
     </Train>
 </Data>

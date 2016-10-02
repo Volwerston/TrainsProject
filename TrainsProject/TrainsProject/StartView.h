@@ -19,8 +19,6 @@ class StartView : public View
 	vector<Items> vectorOfItems;
 	Items *selectedItem;
 	unsigned indexOfSelectedItem;
-	Printer mainPrinter;
-	Printer printerForSelectedItem;
 	string date;
 	string arrival;
 	string departure;

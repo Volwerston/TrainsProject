@@ -8,8 +8,6 @@
 #include "TrainsView.h"
 
 StartView::StartView(TripData _tripData):
-	mainPrinter(Color::WHITE, Color::CYAN),
-	printerForSelectedItem(Color::RED,Color::CYAN),
 	tripData(_tripData),
 	indexOfSelectedItem(0),
 	date("")
