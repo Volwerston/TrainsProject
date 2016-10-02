@@ -14,7 +14,7 @@ HBRUSH brushForRailCarSeatSold1, brushForRailCarSeatSold2 = CreateSolidBrush(RGB
 HBRUSH brushForRailCarFirstClassSeat1, brushForRailCarFirstClassSeat2 = CreateSolidBrush(RGB(52, 152, 219));
 HBRUSH brushForRailCarFirstClassSeatSelected1, brushForRailCarFirstClassSeatSelected2 = CreateSolidBrush(RGB(142, 68, 173));
 
-Printer printer(Color::WHITE, Color::CYAN);
+
 
 RailCarView::RailCarView(const TripData _tripData) :tripData(_tripData) {}
 
@@ -27,13 +27,22 @@ void RailCarView::draw()
 	RoundRect(hdc, 120, 100, 1220, 600, 100, 100);
 	
 	setCursorAt(55, 36);
-	printAtCenter("Press Enter to continue", printer);
+	printAtCenter("Press Enter to continue", printerForRailCarViewEnterButton);
+	setCursorAt(55, 37);
+	printAtCenter("Press Spacebar to select/delete place", printerForRailCarViewEnterButton);
+	setCursorAt(55, 38);
+	printAtCenter("Press Esc if you want to change Rail Car", printerForRailCarViewEnterButton);
 
 	brushForRailCarSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeat2);
 	
+	//draw railcar seats according to its type 
+
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
+	
+	//draw Deluxe railcar
+
 	if (currentRailCar.getType() == TypeOfRailCar::FirstClass)
 	{
 		brushForRailCarFirstClassSeat1 = (HBRUSH)SelectObject(hdc, brushForRailCarFirstClassSeat2);
@@ -52,6 +61,9 @@ void RailCarView::draw()
 			DrawLine(hdc, 320 + i * 270, 380, 480 + i * 270, 380);
 		}
 	}
+
+	//draw second and third class railcars
+
 	else
 	{
 		for (int i = 0; i < 4; i++)
@@ -89,6 +101,9 @@ void RailCarView::draw()
 
 void RailCarView::drawSeat(int num)
 {
+
+	//draw seat according to railcar' its type and position
+
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
@@ -186,8 +201,8 @@ View* RailCarView::handle()
 	Train currentTrain = tripData.getTrain();
 	vector < RailCar> railCars = currentTrain.getVectorOfRailCars();
 	RailCar currentRailCar = railCars[tripData.getNumberOfRailCar()-1];
-	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats();
-	vector<unsigned> vectorOfOrderedSeats = tripData.getVectorOfSeats();
+	vector<unsigned> vectorOfBookedSeats = currentRailCar.getVectotOfBookedSeats(); //vector of seats, booked before
+	vector<unsigned> vectorOfOrderedSeats = tripData.getVectorOfSeats();            //vector of seats, ordered during program run
 	drawSelected(selected);
 	drawSold(vectorOfBookedSeats, selected);
 	drawSold(vectorOfOrderedSeats, selected);
@@ -196,8 +211,11 @@ View* RailCarView::handle()
 	{
 		switch (_getch())
 		{
-		case RIGHT:
+		case RIGHT: //move right
 			selected++;
+
+			//react on this key according to railcar type and position
+
 			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
 				if (selected > 23 || selected == 8 || selected == 16)
@@ -243,7 +261,7 @@ View* RailCarView::handle()
 				}
 			}
 			break;
-		case LEFT:
+		case LEFT: //move left
 			selected--;
 			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
@@ -290,7 +308,7 @@ View* RailCarView::handle()
 				}
 			}
 			break;
-		case UP:
+		case UP: //move up
 			selected -= 8;
 			if (selected < 0)
 			{
@@ -304,7 +322,7 @@ View* RailCarView::handle()
 				drawSold(vectorOfOrderedSeats, selected);
 			}
 			break;
-		case DOWN:
+		case DOWN: //move down
 			selected += 8;
 			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
@@ -349,8 +367,10 @@ View* RailCarView::handle()
 				}
 			}
 			break;
-		case SPACEBAR:
+		case SPACEBAR: //when spacebar selected
 			isBooked = false;
+
+			//checking whether seat the cursor is at is already booked
 
 				for (size_t i = 0; i < vectorOfBookedSeats.size(); i++)
 				{
@@ -360,6 +380,8 @@ View* RailCarView::handle()
 						break;
 					}
 				}
+				
+				//if it's not booked before then we erase it if it's  contained in our order, else we just push it to vectorOfOrderedSeats
 
 			if (!isBooked)
 			{
@@ -392,31 +414,17 @@ View* RailCarView::handle()
 			drawSold(vectorOfBookedSeats, selected);
 			drawSold(vectorOfOrderedSeats, selected);
 			break;
-		case ESC:
+		case ESC: //when escape button pressed
 			nextView = new ChooseCarView(tripData);
 			chosen = true;
 			break;
-		case ENTER_KEY:
+		case ENTER_KEY: //when enter button pressed
 			tripData.setDataOfChosenSeats(vectorOfOrderedSeats);
 			nextView = new CreditCardView(tripData);
 			chosen = true;
 			break;
 		}
 	}
-	
-	/*
-	SelectObject(hdc, penForRailCarSeats1);
-	SelectObject(hdc, penForRailCarSeatsBold1);
-	SelectObject(hdc, brushForRailCarSeat1);
-	SelectObject(hdc, brushForRailCarSeatSelected1);
-	SelectObject(hdc, brushForRailCarSeatSold1);
-	ReleaseDC(hwnd, hdc);
-	DeleteObject(penForRailCarSeats2);
-	DeleteObject(penForRailCarSeatsBold2);
-	DeleteObject(brushForRailCarSeat2);
-	DeleteObject(brushForRailCarSeatSelected2);
-	DeleteObject(brushForRailCarSeatSold2);
-	*/
 
 	return nextView;
 }

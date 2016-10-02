@@ -31,6 +31,7 @@ extern Printer menuActive;
 extern Printer menuPassive; 
 extern Printer techData;
 extern Printer stats;
+extern Printer printerForRailCarViewEnterButton;
 
 extern const int consoleWidth;
 extern const int consoleHeight;
