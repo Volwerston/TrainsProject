@@ -7,7 +7,9 @@ enum class Items
 	Date,
 	ArrivalPoint,
 	DeparturePoint,
-	NumberOfTrain
+	NumberOfTrain,
+	Submit,
+	Exit
 };
 
 class StartView : public View

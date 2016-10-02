@@ -21,28 +21,7 @@ using namespace std;
 
 int main()
 {
-	setConsoleProperties();
-
-	//TripData tripData("2016-10-05", "brody", "ternopil", 0, 0, vector<unsigned int>(), Train());
-
-	//vector<Train> trains = getTrainsByDate("2016-10-05", tripData);
-
-	//tripData.setTrain(trains[4]);
-
-	//setConsoleSize(123, 39);
-
-	/*
-	View* carView = new ChooseCarView(tripData);
-
-	carView->handle();
-
-	delete carView;
-	*/
-
-	//saveTrainsByDate(trains, "2016-10-03");
-	//TripData tripData = TripData();
-	//View *view = new ChooseCarView(tripData);
-	
+	setConsoleProperties();	
 	
 	View *view = new StartView(TripData());
 	while (view != nullptr)
@@ -56,6 +35,5 @@ int main()
 		}
 	}
 
-	system("pause");
 	return 0;
 }

@@ -108,10 +108,23 @@
             <RailCar number="1">
                 <BookedSeat>1</BookedSeat>
             </RailCar>
+            <RailCar number="4">
+                <BookedSeat>1</BookedSeat>
+                <BookedSeat>2</BookedSeat>
+            </RailCar>
         </Route>
         <Route startPoint="mukachevo" endPoint="khmelnytskyi">
             <RailCar number="3">
                 <BookedSeat>1</BookedSeat>
+            </RailCar>
+            <RailCar number="1">
+                <BookedSeat>3</BookedSeat>
+                <BookedSeat>4</BookedSeat>
+            </RailCar>
+        </Route>
+        <Route startPoint="skole" endPoint="khmelnytskyi">
+            <RailCar number="1">
+                <BookedSeat>2</BookedSeat>
             </RailCar>
         </Route>
     </Train>

@@ -18,6 +18,8 @@ StartView::StartView(TripData _tripData):
 	vectorOfItems.push_back(Items::DeparturePoint);
 	vectorOfItems.push_back(Items::ArrivalPoint);
 	vectorOfItems.push_back(Items::NumberOfTrain);
+	vectorOfItems.push_back(Items::Submit);
+	vectorOfItems.push_back(Items::Exit);
 
 	selectedItem = &vectorOfItems[0];
 	SYSTEMTIME time;
@@ -71,6 +73,16 @@ string StartView::itemToString(Items item)
 		toReturn = "Number of train: ";
 	}
 	break;
+	case(Items::Submit):
+	{
+		toReturn = "Submit";
+	}
+	break;
+	case(Items::Exit):
+	{
+		toReturn = "Exit";
+	}
+    break;
 	}
 	return toReturn;
 }
@@ -165,6 +177,20 @@ void StartView::drawItem(Items item, Printer& printer)
 		cursor.Y += 1 + 3 * sizeBetweenLines;
 		setCursorAt(cursor.X, cursor.Y);
 		printer.print(itemToString(item) + trainNumber);
+	}
+	break;
+	case(Items::Submit) :
+	{
+		cursor.Y += 1 + 5 * sizeBetweenLines;
+		setCursorAt(cursor.X, cursor.Y);
+		printAtCenter(itemToString(item), printer);
+	}
+	break;
+	case(Items::Exit):
+	{
+		cursor.Y += 1 + 7 * sizeBetweenLines;
+		setCursorAt(cursor.X, cursor.Y);
+		printAtCenter(itemToString(item), printer);
 	}
 	break;
 	}
@@ -271,8 +297,15 @@ View* StartView::handle()
 		{
 			if (enterWasPressed())
 			{
+				if (selectedItem == &vectorOfItems[vectorOfItems.size() - 2])
+				{
+					return new TrainsView(tripData);
+				}
+			}
 
-				return new TrainsView(tripData);
+			if (selectedItem == &vectorOfItems[vectorOfItems.size() - 1])
+			{
+				return nullptr;
 			}
 			else
 			{

@@ -219,48 +219,13 @@ void CreditCardView::draw()
 	clean();
 	drawPrice();
 	drawVectorOfOptions();
-
-	/*string toPrint = "Total sum: ";
-
-	int koef = 0;
-
-	vector<RailCar> railCars = tripData.getTrain().getVectorOfRailCars();
-
-	TypeOfRailCar carType = railCars[tripData.getNumberOfRailCar() - 1].getType();
-
-	if (carType == TypeOfRailCar::FirstClass)
-	{
-		koef = 40;
-	}
-	else if (carType == TypeOfRailCar::SecondClass)
-	{
-		koef = 30;
-	}
-	else
-	{
-		koef = 20;
-	}
-
-	vector<Station> stations = tripData.getTrain().getVectorOfStations();
-
-	auto it1 = std::find_if(stations.begin(), stations.end(), FindByStationName(tripData.getDeparturePoint()));
-	auto it2 = std::find_if(stations.begin(), stations.end(), FindByStationName(tripData.getArrivalPoint()));
-
-	int numOfStations = std::distance(it1, it2 + 1);
-
-	unsigned price = koef*numOfStations*(tripData.getVectorOfSeats().size());
-	toPrint += "   " + toString(price);
-*/
-	//setCursorAt(0, 1);
-	//printAtCenter(toPrint, stats);
-
 }
 
 
 bool CreditCardView::enterWasPressed()
 {
 	bool toReturn = false;
-	if (creditCardValid(cardNumber))
+	if (creditCardValid(cardNumber) && dateOfExpiration.size() == 8 && CVV.size() == 3)
 	{
 		toReturn = true;
 	}
@@ -272,10 +237,6 @@ View* CreditCardView::handle()
 {
 	View* toReturn = nullptr;
 
-	////setCursorAt(5, 5);
-	////cout << "Enter card number: ";
-	////string cardNum = "";
-	////cin >> cardNum; //valid example: "4149500017188320"
 	bool finish = false;
 
 	unsigned key = _getch();
@@ -329,7 +290,7 @@ View* CreditCardView::handle()
 		{
 			if (enterWasPressed())
 			{
-				if (selectedOption == &vectorOfOptions[3])
+				if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 2])
 				{
 					vector<Route> routes = tripData.getTrain().getVectorOfRoutes();
 
@@ -345,7 +306,7 @@ View* CreditCardView::handle()
 					for (int i = 0; i < routes.size(); ++i)
 					{
 						if (routes[i].getArrivalStation() == toAdd.getArrivalStation()
-							&& routes[i].getDepartureStation() == routes[i].getDepartureStation())
+							&& routes[i].getDepartureStation() == toAdd.getDepartureStation())
 						{
 							routeFound = true;
 
@@ -428,16 +389,18 @@ View* CreditCardView::handle()
 					toReturn = new StartView(TripData());
 					finish = true;
 				}
-				else if (selectedOption == &vectorOfOptions[4])
+			}
+
+
+			if (selectedOption == &vectorOfOptions[vectorOfOptions.size() - 1])
 				{
 					toReturn = new RailCarView(tripData);
 					finish = true;
 				}
-				else
+			else
 				{
 					key = _getch();
 				}
-			}
 		}
 			break;
 		}
