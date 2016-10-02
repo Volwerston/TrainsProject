@@ -52,19 +52,6 @@
         <Station name="myrgorod" arriveTime="08:22" leaveTime="08:24"/>
         <Arrival name="poltava" arriveTime="09:54"/>
     </Train>
-    <Train number="270">
-        <RailCar number="1" type="L"/>
-        <RailCar number="1" type="L"/>
-        <RailCar number="3" type="K"/>
-        <RailCar number="4" type="K"/>
-        <RailCar number="5" type="P"/>
-        <RailCar number="6" type="P"/>
-        <Departure name="odesa" leaveTime="10:00"/>
-        <Station name="kirovograd" arriveTime="13:37" leaveTime="13:40"/>
-        <Station name="kremenchuk" arriveTime="16:43" leaveTime="17:02"/>
-        <Station name="poltava" arriveTime="19:17" leaveTime="19:37"/>
-        <Arrival name="kharkiv" arriveTime="22:49"/>
-    </Train>
     <Train number="601">
         <RailCar number="1" type="P"/>
         <RailCar number="2" type="P"/>
@@ -77,5 +64,25 @@
         <Station name="stryi" arriveTime="15:11" leaveTime="15:21"/>
         <Station name="drogobych" arriveTime="15:49" leaveTime="16:10"/>
         <Arrival name="truskavets" arriveTime="16:30"/>
+    </Train>
+    <Train number="270">
+        <RailCar number="1" type="L"/>
+        <RailCar number="1" type="L"/>
+        <RailCar number="3" type="K"/>
+        <RailCar number="4" type="K"/>
+        <RailCar number="5" type="P"/>
+        <RailCar number="6" type="P"/>
+        <Departure name="odesa" leaveTime="10:00"/>
+        <Station name="kirovograd" arriveTime="13:37" leaveTime="13:40"/>
+        <Station name="kremenchuk" arriveTime="16:43" leaveTime="17:02"/>
+        <Station name="poltava" arriveTime="19:17" leaveTime="19:37"/>
+        <Arrival name="kharkiv" arriveTime="22:49"/>
+        <Route startPoint="odesa" endPoint="kremenchuk">
+            <RailCar number="2">
+                <BookedSeat>1</BookedSeat>
+                <BookedSeat>2</BookedSeat>
+                <BookedSeat>4</BookedSeat>
+            </RailCar>
+        </Route>
     </Train>
 </Data>

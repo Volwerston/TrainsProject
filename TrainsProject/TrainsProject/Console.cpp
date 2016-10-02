@@ -248,7 +248,7 @@ bool dateValidation(unsigned& index, unsigned& key, string& date)
 				return false;
 			}
 		}
-		else if (date[6] == '1' || date[6] == 2)
+		else if (date[6] == '1' || date[6] == '2')
 		{
 			return true;
 		}

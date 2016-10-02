@@ -36,22 +36,6 @@
         <Station name="vinnytsia" arriveTime="21:15" leaveTime="21:34"/>
         <Arrival name="kyiv" arriveTime="23:43"/>
     </Train>
-    <Train number="234">
-        <RailCar number="1" type="L"/>
-        <RailCar number="2" type="L"/>
-        <RailCar number="3" type="L"/>
-        <RailCar number="4" type="K"/>
-        <RailCar number="5" type="K"/>
-        <RailCar number="6" type="K"/>
-        <RailCar number="7" type="P"/>
-        <RailCar number="8" type="P"/>
-        <Departure name="khmelnytskyi" leaveTime="00:06"/>
-        <Station name="vinnytsia" arriveTime="02:02" leaveTime="02:08"/>
-        <Station name="kyiv" arriveTime="06:03" leaveTime="06:28"/>
-        <Station name="lubny" arriveTime="07:27" leaveTime="07:29"/>
-        <Station name="myrgorod" arriveTime="08:22" leaveTime="08:24"/>
-        <Arrival name="poltava" arriveTime="09:54"/>
-    </Train>
     <Train number="270">
         <RailCar number="1" type="L"/>
         <RailCar number="1" type="L"/>
@@ -77,5 +61,27 @@
         <Station name="stryi" arriveTime="15:11" leaveTime="15:21"/>
         <Station name="drogobych" arriveTime="15:49" leaveTime="16:10"/>
         <Arrival name="truskavets" arriveTime="16:30"/>
+    </Train>
+    <Train number="234">
+        <RailCar number="1" type="L"/>
+        <RailCar number="2" type="L"/>
+        <RailCar number="3" type="L"/>
+        <RailCar number="4" type="K"/>
+        <RailCar number="5" type="K"/>
+        <RailCar number="6" type="K"/>
+        <RailCar number="7" type="P"/>
+        <RailCar number="8" type="P"/>
+        <Departure name="khmelnytskyi" leaveTime="00:06"/>
+        <Station name="vinnytsia" arriveTime="02:02" leaveTime="02:08"/>
+        <Station name="kyiv" arriveTime="06:03" leaveTime="06:28"/>
+        <Station name="lubny" arriveTime="07:27" leaveTime="07:29"/>
+        <Station name="myrgorod" arriveTime="08:22" leaveTime="08:24"/>
+        <Arrival name="poltava" arriveTime="09:54"/>
+        <Route startPoint="myrgorod" endPoint="poltava">
+            <RailCar number="2">
+                <BookedSeat>1</BookedSeat>
+                <BookedSeat>2</BookedSeat>
+            </RailCar>
+        </Route>
     </Train>
 </Data>
