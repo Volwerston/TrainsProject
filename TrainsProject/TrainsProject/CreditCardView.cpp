@@ -399,7 +399,10 @@ View* CreditCardView::handle()
 				}
 			else
 				{
-					key = _getch();
+					if (!enterWasPressed())
+					{
+						key = _getch();
+					}
 				}
 		}
 			break;

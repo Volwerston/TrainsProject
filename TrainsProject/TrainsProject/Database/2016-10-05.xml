@@ -104,6 +104,7 @@
                 <BookedSeat>1</BookedSeat>
                 <BookedSeat>2</BookedSeat>
                 <BookedSeat>3</BookedSeat>
+                <BookedSeat>9</BookedSeat>
             </RailCar>
             <RailCar number="1">
                 <BookedSeat>1</BookedSeat>
