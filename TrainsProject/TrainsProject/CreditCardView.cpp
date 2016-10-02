@@ -179,6 +179,7 @@ View* CreditCardView::handle()
 				railCars.push_back(newRailCar);
 			}
 
+			routes[i].setBookingData(railCars);
 			break;
 		}
 	}

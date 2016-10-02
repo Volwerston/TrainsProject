@@ -306,13 +306,10 @@ void saveTrainsByDate(vector<Train>& vec, const string& date)
 	doc.SaveFile(fileName.c_str());
 }
 
-vector<Train> getSuitableTrains(const vector<Train> &tr)
+vector<Train> getSuitableTrains(const vector<Train> &tr, TripData& tripData)
 {
 	vector<Train> vectorOfSuitableTrains;
 	vector<Station> vectorOfStations;
-	TripData tripData;
-	tripData.setDeparturePoint("ivano-frankivsk");
-	tripData.setArrivalPoint("kyiv");
 	for (size_t i = 0; i < tr.size(); i++)
 	{
 		bool departureStationFound = false;
@@ -329,10 +326,11 @@ vector<Train> getSuitableTrains(const vector<Train> &tr)
 			}
 			if (tripData.getArrivalPoint() == vectorOfStations[j].getName())
 			{
-				arrivalStationFound == true;
+				arrivalStationFound = true;
 				numberOfArrivalStation = j;
 			}
 		}
+
 		if (departureStationFound == true && arrivalStationFound == true)
 		{
 			if (numberOfDepartureStation < numberOfArrivalStation)

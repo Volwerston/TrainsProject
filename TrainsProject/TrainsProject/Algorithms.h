@@ -4,6 +4,6 @@
 
 vector<Train> getTrainsByDate(const string&, TripData&);
 
-vector<Train> getSuitableTrains(const vector<Train>&);
+vector<Train> getSuitableTrains(const vector<Train>&, TripData&);
 
 void saveTrainsByDate(vector<Train>&, const string&);
