@@ -138,20 +138,16 @@ void ChooseCarView::draw()
 		chooseOptions.push_back(toPrint);
 	}
 
+
+	// nexessary "Go back" option
 	chooseOptions.push_back("Go back");
 }
 
-View* ChooseCarView::handle()
+void ChooseCarView::printOptions(int currItem)
 {
-	bool chosen = false;
-	unsigned numOfCar;
-
-	View* toReturn = nullptr;
-	int currItem = 0;
-
 	for (int i = 0; i < chooseOptions.size(); ++i)
 	{
-		setCursorAt(0, 3 + 2*i);
+		setCursorAt(0, 3 + 2 * i);
 
 		if (i == currItem)
 		{
@@ -162,6 +158,17 @@ View* ChooseCarView::handle()
 			printAtCenter(chooseOptions[i], menuPassive);
 		}
 	}
+}
+
+View* ChooseCarView::handle()
+{
+	bool chosen = false;
+	unsigned numOfCar;
+
+	View* toReturn = nullptr;
+	int currItem = 0;
+
+	printOptions(currItem);
 
 	int prevItem = 0;
 
@@ -184,6 +191,7 @@ View* ChooseCarView::handle()
 					--currItem;
 				}
 
+				// redraws previously and currently chosen options
 				setCursorAt(0, 3 + 2*prevItem);
 				printAtCenter(chooseOptions[prevItem], menuPassive);
 				setCursorAt(0, 3 + 2*currItem);
@@ -201,6 +209,7 @@ View* ChooseCarView::handle()
 					++currItem;
 				}
 
+				// redraws previously and currently chosen options
 				setCursorAt(0, 3 + 2*prevItem);
 				printAtCenter(chooseOptions[prevItem], menuPassive);
 				setCursorAt(0, 3 + 2*currItem);
@@ -218,11 +227,13 @@ View* ChooseCarView::handle()
 			else // Railcar was chosen
 			{
 
-				int numOfFreePlaces = std::count(trainSnippet[currItem].begin(), trainSnippet[currItem].end(), true);
+				int numOfBookedPlaces = std::count(trainSnippet[currItem].begin(), trainSnippet[currItem].end(), true);
 				RailCar buf = tripData.getTrain().getVectorOfRailCars()[currItem];
 
-				if (buf.getNumberOfSeats() != numOfFreePlaces)
+				// if not all seats are booked
+				if (buf.getNumberOfSeats() != numOfBookedPlaces)
 				{
+					// sets tripData configuration and redirects to the RailCarView
 					numOfCar = currItem + 1;
 
 					tripData.setNumberOfRailcar(numOfCar);
@@ -234,16 +245,15 @@ View* ChooseCarView::handle()
 					{
 						for (int j = 0; j < trainSnippet[i].size(); ++j)
 						{
-							if (trainSnippet[i][j])
+							if (trainSnippet[i][j]) // seat is booked
 							{
 								railCars[i].pushSeatToVectorOfBookedSeats(j);
 							}
 						}
 					}
 
+					// sets data of booked seats in all railcars
 					tripData.setDataOfBookedSeats(railCars);
-
-					// you can find out the type of car by calling tripData.getTrain().getVectorOfRailCars()[tripData.getNumberOfRailCar() - 1].getType();
 
 					toReturn = new RailCarView(tripData);
 					chosen = true;

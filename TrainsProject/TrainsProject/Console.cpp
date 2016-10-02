@@ -22,8 +22,6 @@ Printer printerForRailCarViewEnterButton(Color::WHITE, Color::CYAN);
 Printer mainPrinter(Color::WHITE, Color::CYAN);
 Printer printerForSelectedItem(Color::RED, Color::CYAN);
 
-vector<Train> trains;
-
 void scrollOff(int width, int height)
 {
 	string cols = to_string(width);
@@ -114,6 +112,7 @@ BOOL DrawLine(HDC hdc, int x1, int y1, int x2, int y2)
 	return LineTo(hdc, x2, y2);
 }
 
+// reads the correct date from user
 int correctDate(unsigned& key, string& date,const string& currentDate, View* v)
 {
 	if (UPorDOWNorENTER(key))
@@ -196,6 +195,7 @@ int correctDate(unsigned& key, string& date,const string& currentDate, View* v)
 	}
 }
 
+// the date passed in "date" is valid
 bool dateValidation(unsigned& index, unsigned& key, string& date)
 {
 	if (index == 4 && key - ASCII_ZERO < 2)
@@ -269,6 +269,7 @@ bool dateValidation(unsigned& index, unsigned& key, string& date)
 	}
 }
 
+// if backspace was pressed
 bool backSpace(unsigned& index, unsigned& key, string& str, View* v)
 {
 	bool toReturn = false;
@@ -310,6 +311,8 @@ int UPorDOWNorENTER(unsigned& key)
 	}
 }
 
+
+// gets local date
 string getCurrentDate() 
 {
 	SYSTEMTIME time;
@@ -340,6 +343,7 @@ string getCurrentDate()
 	return currYear + currMonth + currDay;
 }
 
+// user writes a word and this fuction proceeds it
 int writingWord(string& word, unsigned size, unsigned& key, View* v)
 {
 	unsigned start = word.size();
@@ -375,6 +379,8 @@ int writingWord(string& word, unsigned size, unsigned& key, View* v)
 	}
 }
 
+
+// user writes a number and this function proceeds it
 int writingNumber(string& word, unsigned size, unsigned& key, View* v)
 {
 	unsigned start = word.size();
