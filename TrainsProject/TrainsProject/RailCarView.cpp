@@ -175,11 +175,11 @@ void RailCarView::drawSelected(int selected)
 void RailCarView::drawSold(vector<unsigned> vec, int selected)
 {
 	brushForRailCarSeatSold1 = (HBRUSH)SelectObject(hdc, brushForRailCarSeatSold2);
-
+	
 	for (size_t i = 0; i < vec.size(); i++)
 	{		
-		drawSeat(vec[i]);
-		if (vec[i] == selected)
+		drawSeat(vec[i]); //draw all sold places
+		if (vec[i] == selected) //check if the cursor is at sold. if it is, then use different pen
 		{
 			penForRailCarSelectedSold1 = (HPEN)SelectObject(hdc, penForRailCarSelectedSold2);
 			drawSeat(selected);
@@ -218,16 +218,16 @@ View* RailCarView::handle()
 
 			if (currentRailCar.getType() == TypeOfRailCar::ThirdClass)
 			{
-				if (selected > 23 || selected == 8 || selected == 16)
+				if (selected > 23 || selected == 8 || selected == 16) // checking not to let you "walk" over the border
 				{
 					selected--;
 				}
 				else
 				{
-					drawSelected(selected);
-					drawSeat(selected - 1);
-					drawSold(vectorOfBookedSeats, selected);
-					drawSold(vectorOfOrderedSeats, selected);
+					drawSelected(selected); //draw selected seat
+					drawSeat(selected - 1); //draw previous seat as default
+					drawSold(vectorOfBookedSeats, selected); //draw all sold seats
+					drawSold(vectorOfOrderedSeats, selected); //draw all ordered seats
 				}
 			}
 			else if (currentRailCar.getType() == TypeOfRailCar::SecondClass)
@@ -367,7 +367,7 @@ View* RailCarView::handle()
 				}
 			}
 			break;
-		case SPACEBAR: //when spacebar selected
+		case SPACEBAR: //Spacebar
 			isBooked = false;
 
 			//checking whether seat the cursor is at is already booked
@@ -414,11 +414,11 @@ View* RailCarView::handle()
 			drawSold(vectorOfBookedSeats, selected);
 			drawSold(vectorOfOrderedSeats, selected);
 			break;
-		case ESC: //when escape button pressed
+		case ESC: //Escape
 			nextView = new ChooseCarView(tripData);
 			chosen = true;
 			break;
-		case ENTER_KEY: //when enter button pressed
+		case ENTER_KEY: //Enter
 			tripData.setDataOfChosenSeats(vectorOfOrderedSeats);
 			nextView = new CreditCardView(tripData);
 			chosen = true;
