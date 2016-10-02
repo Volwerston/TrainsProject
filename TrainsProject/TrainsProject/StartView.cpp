@@ -11,7 +11,7 @@ StartView::StartView(TripData _tripData):
 	tripData(_tripData),
 	indexOfSelectedItem(0),
 	date("")
-{
+{ // push items to vector of items can be used on the screen
 	vectorOfItems.push_back(Items::Date);
 	vectorOfItems.push_back(Items::DeparturePoint);
 	vectorOfItems.push_back(Items::ArrivalPoint);
@@ -48,7 +48,7 @@ StartView::StartView(TripData _tripData):
 
 string StartView::itemToString(Items item)
 {
-	string toReturn = "";
+	string toReturn = ""; // return string text due to its item value
 	switch (item)
 	{
 	case(Items::Date):
