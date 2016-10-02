@@ -1,9 +1,11 @@
-#include "StartView.h"
-#include "Console.h"
 #include <wchar.h>
 #include <string>
 #include <iostream>
 #include <conio.h>
+
+#include "StartView.h"
+#include "Console.h"
+#include "TrainsView.h"
 
 StartView::StartView(TripData _tripData):
 	mainPrinter(Color::BLUE, Color::BLACK),
@@ -272,7 +274,7 @@ int StartView::correctDate(unsigned& key)
 	backSpace(start, key, date);
 	if (key - ASCII_ZERO < 10)
 	{
-		for (unsigned i = start; i < 8 - i; ++i)
+		for (unsigned i = start; i < 8; ++i)
 		{
 			if (key > currentDate[i])
 			{
@@ -504,7 +506,8 @@ View* StartView::handle()
 		{
 			if (enterWasPressed())
 			{
-				//return SOMEVIEW(TripData);
+
+				return new TrainsView(tripData);
 			}
 			else
 			{

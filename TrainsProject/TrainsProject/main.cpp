@@ -7,6 +7,7 @@
 #include "ChooseCarView.h"
 #include "RailCarView.h"
 #include "StartView.h"
+#include "TrainsView.h"
 
 template<typename T>
 string toString(T dat)
@@ -22,11 +23,11 @@ int main()
 {
 	setConsoleProperties();
 
-	TripData tripData("2016-10-05", "kovel", "brody", 0, 0, vector<unsigned int>(), Train());
+	//TripData tripData("2016-10-05", "brody", "ternopil", 0, 0, vector<unsigned int>(), Train());
 
-	vector<Train> trains = getTrainsByDate("2016-10-05", tripData);
+	//vector<Train> trains = getTrainsByDate("2016-10-05", tripData);
 
-	tripData.setTrain(trains[4]);
+	//tripData.setTrain(trains[4]);
 
 	//setConsoleSize(123, 39);
 
@@ -43,7 +44,7 @@ int main()
 	//View *view = new ChooseCarView(tripData);
 	
 	
-	View *view = new ChooseCarView(tripData);
+	View *view = new StartView(TripData());
 	while (view != nullptr)
 	{
 		view->draw();
@@ -54,8 +55,6 @@ int main()
 			view = newView;
 		}
 	}
-	
-	
 
 	system("pause");
 	return 0;
